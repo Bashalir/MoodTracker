@@ -1,7 +1,9 @@
-package com.oc.bashalir.moodtracker;
+package com.oc.bashalir.moodtracker.controller;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.oc.bashalir.moodtracker.R;
 
 public class MainActivity extends AppCompatActivity {
 
