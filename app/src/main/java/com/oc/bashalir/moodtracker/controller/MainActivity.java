@@ -5,8 +5,8 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.Button;
-
 import com.oc.bashalir.moodtracker.R;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
         mHistoryButton = findViewById(R.id.activity_main_history_btn);
 
         mListMoodRecyclerView.setLayoutManager (new LinearLayoutManager(this));
-      //  rv.setAdapter(new MyAdapter());
+        mListMoodRecyclerView.setAdapter(new MoodAdapter());
 
     }
 }
