@@ -1,15 +1,17 @@
 package com.oc.bashalir.moodtracker.controller;
 
+import android.content.res.Resources;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.oc.bashalir.moodtracker.R;
 
@@ -67,8 +69,14 @@ public class MoodAdapter extends RecyclerView.Adapter<MoodAdapter.MoodViewHolder
      }
 
      public void display (Pair<Integer, Integer> pair) {
-         imgMood.setImageResource(pair.first);
-        backMood.setBackground(new ColorDrawable(pair.second));
+
+
+       ColorDrawable cd=new ColorDrawable(pair.second);
+
+       Log.d("Debug","Color :"+pair.second);
+
+        imgMood.setImageResource(pair.first);
+        backMood.setBackground(cd);
 
      }
     };
