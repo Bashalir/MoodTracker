@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
 
         mListMoodRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mListMoodRecyclerView.setAdapter(new MoodAdapter());
-        mListMoodRecyclerView.scrollToPosition(2);
+        mListMoodRecyclerView.scrollToPosition(3);
 
 
         mCommentButton.setOnClickListener(new View.OnClickListener() {
