@@ -18,6 +18,8 @@ import com.oc.bashalir.moodtracker.R;
 import java.util.Arrays;
 import java.util.List;
 
+import static android.view.View.SCROLLBAR_POSITION_DEFAULT;
+
 
 /**
  * Created by Sumer on 08/03/2018.
@@ -62,21 +64,18 @@ public class MoodAdapter extends RecyclerView.Adapter<MoodAdapter.MoodViewHolder
 
      public MoodViewHolder(final View itemView) {
           super (itemView);
-
-         imgMood=(itemView.findViewById(R.id.list_cell_image_mood_img));
+          imgMood=(itemView.findViewById(R.id.list_cell_image_mood_img));
           backMood = (itemView.findViewById(R.id.list_cell_back_mood_rl));
-
      }
 
      public void display (Pair<Integer, Integer> pair) {
-
 
        ColorDrawable cd=new ColorDrawable(pair.second);
 
        Log.d("Debug","Color :"+pair.second);
 
         imgMood.setImageResource(pair.first);
-        backMood.setBackground(cd);
+        backMood.setBackgroundColor(pair.second);
 
      }
     };

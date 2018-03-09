@@ -5,7 +5,7 @@ import android.os.Bundle;
 
 import com.oc.bashalir.moodtracker.R;
 
-public class History extends AppCompatActivity {
+public class HistoryActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
