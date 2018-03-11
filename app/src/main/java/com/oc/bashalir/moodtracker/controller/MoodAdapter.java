@@ -4,17 +4,16 @@ import android.graphics.Color;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
-
 import com.oc.bashalir.moodtracker.R;
+import com.oc.bashalir.moodtracker.model.Mood;
 
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
+
 
 
 
@@ -26,18 +25,17 @@ import java.util.List;
 public class MoodAdapter extends RecyclerView.Adapter<MoodAdapter.MoodViewHolder> {
 
 
-    private final List<Pair<Integer,String>> listMood = Arrays.asList (
-            Pair.create(R.drawable.smiley_sad, "#FFDE3C50"),
-            Pair.create(R.drawable.smiley_disappointed,  "#ff9b9b9b"),
-            Pair.create(R.drawable.smiley_normal, "#a5468ad9"),
-            Pair.create(R.drawable.smiley_happy,  "#ffb8e986"),
-            Pair.create(R.drawable.smiley_super_happy, "#fff9ec4f")
-            );
+    Mood mood1= new Mood(R.drawable.smiley_sad,"#FFDE3C50","Sad",R.drawable.smiley_sad);
+    Mood mood2= new Mood(R.drawable.smiley_disappointed,"#ff9b9b9b","Disappointed",R.drawable.smiley_sad);
+    Mood mood3= new Mood(R.drawable.smiley_normal,"#a5468ad9","Sad",R.drawable.smiley_sad);
+    Mood mood4= new Mood(R.drawable.smiley_happy,"#ffb8e986","Sad",R.drawable.smiley_sad);
+    Mood mood5= new Mood(R.drawable.smiley_super_happy,"#fff9ec4f","Sad",R.drawable.smiley_sad);
 
+    ArrayList<Mood> mList= new ArrayList<>(Arrays.asList(mood1, mood2, mood3, mood4, mood5));
 
     @Override
     public int getItemCount() {
-        return listMood.size();
+        return mList.size();
     }
 
     @Override
@@ -51,8 +49,12 @@ public class MoodAdapter extends RecyclerView.Adapter<MoodAdapter.MoodViewHolder
     @Override
     public void onBindViewHolder(MoodViewHolder holder, int position) {
 
-        Pair<Integer,String> pair = listMood.get(position);
-        holder.display(pair);
+       /* Pair<Integer,String> pair = listMood.get(position);
+        holder.display(pair);*/
+
+       Mood mood = mList.get(position);
+        holder.display(mood);
+
     }
 
     public class MoodViewHolder extends RecyclerView.ViewHolder{
@@ -66,18 +68,16 @@ public class MoodAdapter extends RecyclerView.Adapter<MoodAdapter.MoodViewHolder
           backMood = (itemView.findViewById(R.id.list_cell_back_mood_cv));
      }
 
-     public void display (Pair<Integer, String> pair) {
+     public void display (Mood mood) {
 
 
-       Log.d("Debug","Color :"+pair.second);
+       Log.d("Debug","Color :"+mood.getBackColor());
 
-        imgMood.setImageResource(pair.first);
-      //  backMood.setCardBackgroundColor(Color.parseColor("#ffde3c50"));
-         backMood.setCardBackgroundColor(Color.parseColor(pair.second));
+         imgMood.setImageResource(mood.getSmiley());
+         backMood.setCardBackgroundColor(Color.parseColor(mood.getBackColor()));
 
      }
-    };
-
+    }
 
 
 
