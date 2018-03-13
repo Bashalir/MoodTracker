@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
     private ImageView mCommentButton;
     private ImageView mHistoryButton;
     private SharedPreferences mPreferences;
-
+    private int mMoodPosition=2;
 
 
     @Override
@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
 
         mListMoodRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mListMoodRecyclerView.setAdapter(new MoodAdapter());
-        mListMoodRecyclerView.scrollToPosition(2);
+        mListMoodRecyclerView.scrollToPosition(mMoodPosition);
 
 
         mCommentButton.setOnClickListener(new View.OnClickListener() {
@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-        private void addComment() {
+    private void addComment() {
 
             final EditText input = new EditText(this);
 

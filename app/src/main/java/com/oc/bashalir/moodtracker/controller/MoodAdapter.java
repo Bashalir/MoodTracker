@@ -24,12 +24,11 @@ import java.util.Arrays;
 
 public class MoodAdapter extends RecyclerView.Adapter<MoodAdapter.MoodViewHolder> {
 
-
-    Mood mood1= new Mood(R.drawable.smiley_sad,"#FFDE3C50","Sad",R.drawable.smiley_sad);
-    Mood mood2= new Mood(R.drawable.smiley_disappointed,"#ff9b9b9b","Disappointed",R.drawable.smiley_sad);
-    Mood mood3= new Mood(R.drawable.smiley_normal,"#a5468ad9","Sad",R.drawable.smiley_sad);
-    Mood mood4= new Mood(R.drawable.smiley_happy,"#ffb8e986","Sad",R.drawable.smiley_sad);
-    Mood mood5= new Mood(R.drawable.smiley_super_happy,"#fff9ec4f","Sad",R.drawable.smiley_sad);
+    private final Mood mood1= new Mood(R.drawable.smiley_sad,"#FFDE3C50","Sad",R.drawable.smiley_sad);
+    private final Mood mood2= new Mood(R.drawable.smiley_disappointed,"#ff9b9b9b","Disappointed",R.drawable.smiley_sad);
+    private final Mood mood3= new Mood(R.drawable.smiley_normal,"#a5468ad9","Normal",R.drawable.smiley_sad);
+    private final Mood mood4= new Mood(R.drawable.smiley_happy,"#ffb8e986","Happy",R.drawable.smiley_sad);
+    private final Mood mood5= new Mood(R.drawable.smiley_super_happy,"#fff9ec4f","Super Happy",R.drawable.smiley_sad);
 
     ArrayList<Mood> mList= new ArrayList<>(Arrays.asList(mood1, mood2, mood3, mood4, mood5));
 
@@ -49,11 +48,8 @@ public class MoodAdapter extends RecyclerView.Adapter<MoodAdapter.MoodViewHolder
     @Override
     public void onBindViewHolder(MoodViewHolder holder, int position) {
 
-       /* Pair<Integer,String> pair = listMood.get(position);
-        holder.display(pair);*/
-
        Mood mood = mList.get(position);
-        holder.display(mood);
+       holder.display(mood);
 
     }
 
@@ -68,13 +64,13 @@ public class MoodAdapter extends RecyclerView.Adapter<MoodAdapter.MoodViewHolder
           backMood = (itemView.findViewById(R.id.list_cell_back_mood_cv));
      }
 
-     public void display (Mood mood) {
+     private void display (Mood mood) {
 
 
        Log.d("Debug","Color :"+mood.getBackColor());
 
-         imgMood.setImageResource(mood.getSmiley());
-         backMood.setCardBackgroundColor(Color.parseColor(mood.getBackColor()));
+       imgMood.setImageResource(mood.getSmiley());
+       backMood.setCardBackgroundColor(Color.parseColor(mood.getBackColor()));
 
      }
     }
