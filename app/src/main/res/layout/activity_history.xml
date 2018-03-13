@@ -8,41 +8,15 @@
     tools:context="com.oc.bashalir.moodtracker.controller.HistoryActivity">
 
 
-    <TableRow
+    <!-- List Mood RecyclerView  -->
+
+    <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:gravity="center_horizontal"
-        android:orientation="horizontal" />
-    <TableRow
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:gravity="center_horizontal"
-        android:orientation="horizontal" />
-    <TableRow
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:gravity="center_horizontal"
-        android:orientation="horizontal" />
-    <TableRow
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:gravity="center_horizontal"
-        android:orientation="horizontal" />
-    <TableRow
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:gravity="center_horizontal"
-        android:orientation="horizontal" />
-    <TableRow
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:gravity="center_horizontal"
-        android:orientation="horizontal" />
-    <TableRow
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:gravity="center_horizontal"
-        android:orientation="horizontal" />
+        android:layout_height="match_parent"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/activity_main_listMood_rv">
+    </android.support.v7.widget.RecyclerView>
 
 
 
