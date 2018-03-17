@@ -7,11 +7,11 @@ package com.oc.bashalir.moodtracker.model;
 public class Mood {
 
     private Integer mSmiley; // Smiley image link
-    private String mBackColor; // Color code of the bottom of the cardview
+    private Integer mBackColor; // Color code of the bottom of the cardview
     private String mDescription; // Description of the posted smiley
     private Integer mSound; //  Mood sound link
 
-    public Mood(Integer smiley, String backColor, String description, Integer sound) {
+    public Mood(Integer smiley, Integer backColor, String description, Integer sound) {
         this.setSmiley(smiley);
         this.setBackColor(backColor);
         this.setDescription(description);
@@ -27,11 +27,11 @@ public class Mood {
         mSmiley = smiley;
     }
 
-    public String getBackColor() {
+    public Integer getBackColor() {
         return mBackColor;
     }
 
-    public void setBackColor(String backColor) {
+    public void setBackColor(Integer backColor) {
         mBackColor = backColor;
     }
 

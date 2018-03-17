@@ -1,6 +1,5 @@
-package com.oc.bashalir.moodtracker.controller;
+package com.oc.bashalir.moodtracker.model;
 
-import android.graphics.Color;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -9,12 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import com.oc.bashalir.moodtracker.R;
-import com.oc.bashalir.moodtracker.model.Mood;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-
-
 
 
 
@@ -24,11 +20,11 @@ import java.util.Arrays;
 
 public class MoodAdapter extends RecyclerView.Adapter<MoodAdapter.MoodViewHolder> {
 
-    private final Mood mood1= new Mood(R.drawable.smiley_sad,"#FFDE3C50","Sad",R.drawable.smiley_sad);
-    private final Mood mood2= new Mood(R.drawable.smiley_disappointed,"#ff9b9b9b","Disappointed",R.drawable.smiley_sad);
-    private final Mood mood3= new Mood(R.drawable.smiley_normal,"#a5468ad9","Normal",R.drawable.smiley_sad);
-    private final Mood mood4= new Mood(R.drawable.smiley_happy,"#ffb8e986","Happy",R.drawable.smiley_sad);
-    private final Mood mood5= new Mood(R.drawable.smiley_super_happy,"#fff9ec4f","Super Happy",R.drawable.smiley_sad);
+    private final Mood mood1= new Mood(R.drawable.smiley_sad,R.color.faded_red,"Sad",R.drawable.smiley_sad);
+    private final Mood mood2= new Mood(R.drawable.smiley_disappointed,R.color.warm_grey,"Disappointed",R.drawable.smiley_sad);
+    private final Mood mood3= new Mood(R.drawable.smiley_normal,R.color.cornflower_blue_65, "Normal",R.drawable.smiley_sad);
+    private final Mood mood4= new Mood(R.drawable.smiley_happy,R.color.light_sage,"Happy",R.drawable.smiley_sad);
+    private final Mood mood5= new Mood(R.drawable.smiley_super_happy,R.color.banana_yellow,"Super Happy",R.drawable.smiley_sad);
 
     ArrayList<Mood> mList= new ArrayList<>(Arrays.asList(mood1, mood2, mood3, mood4, mood5));
 
@@ -70,8 +66,9 @@ public class MoodAdapter extends RecyclerView.Adapter<MoodAdapter.MoodViewHolder
        Log.d("Debug","Color :"+mood.getBackColor());
 
        imgMood.setImageResource(mood.getSmiley());
-       backMood.setCardBackgroundColor(Color.parseColor(mood.getBackColor()));
-
+      // backMood.setCardBackgroundColor(Color.parseColor(mood.getBackColor()));
+       //  backMood.setCardBackgroundColor(R.drawable.smiley_sad);
+         backMood.setBackgroundResource(mood.getBackColor());
      }
     }
 

@@ -11,14 +11,13 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SnapHelper;
 import android.text.InputType;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.oc.bashalir.moodtracker.R;
+import com.oc.bashalir.moodtracker.model.MoodAdapter;
 
 
 public class MainActivity extends AppCompatActivity {
