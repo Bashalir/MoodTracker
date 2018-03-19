@@ -74,10 +74,12 @@ public class MoodAdapter extends RecyclerView.Adapter<MoodAdapter.MoodViewHolder
               @Override
               public void onClick(View view) {
 
-                  Toast.makeText(view.getContext(), currentMood.getDescription(), Toast.LENGTH_SHORT).show();
+                  // Display a message of the selected Mood
+                  Toast.makeText(view.getContext(), currentMood.getDescription(), Toast.LENGTH_SHORT).show(); //
 
-                      mPlayer = MediaPlayer.create(view.getContext(), currentMood.getSound());
-                      mPlayer.start();
+                  // Play the Sound of the selected Mood
+                  mPlayer = MediaPlayer.create(view.getContext(), currentMood.getSound());
+                  mPlayer.start();
 
 
               }
