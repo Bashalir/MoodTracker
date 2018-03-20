@@ -17,8 +17,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.oc.bashalir.moodtracker.R;
-import com.oc.bashalir.moodtracker.model.Mood;
-import com.oc.bashalir.moodtracker.model.MoodAdapter;
+import com.oc.bashalir.moodtracker.view.MoodAdapter;
 
 
 public class MainActivity extends AppCompatActivity {
