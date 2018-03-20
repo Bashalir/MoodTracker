@@ -17,7 +17,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.oc.bashalir.moodtracker.R;
-import com.oc.bashalir.moodtracker.view.MoodAdapter;
+import com.oc.bashalir.moodtracker.model.MoodAdapter;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -27,6 +27,21 @@ public class MainActivity extends AppCompatActivity {
     private ImageView mHistoryButton;
     private SharedPreferences mPreferences;
     private int mMoodPosition=2;
+    private MoodAdapter mAdapter;
+
+
+    private void configureRecyclerView(){
+
+        mAdapter=new MoodAdapter();
+        mListMoodRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mListMoodRecyclerView.setAdapter(mAdapter);
+
+        mListMoodRecyclerView.scrollToPosition(mMoodPosition);
+
+        SnapHelper snapHelper = new LinearSnapHelper();
+        snapHelper.attachToRecyclerView(mListMoodRecyclerView);
+
+    }
 
 
     @Override
@@ -38,16 +53,10 @@ public class MainActivity extends AppCompatActivity {
         mCommentButton = findViewById(R.id.activity_main_comment_btn);
         mHistoryButton = findViewById(R.id.activity_main_history_btn);
 
-
         mPreferences=getPreferences(MODE_PRIVATE);
 
-
-        SnapHelper snapHelper = new LinearSnapHelper();
-        snapHelper.attachToRecyclerView(mListMoodRecyclerView);
-
-        mListMoodRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mListMoodRecyclerView.setAdapter(new MoodAdapter());
-        mListMoodRecyclerView.scrollToPosition(mMoodPosition);
+        this.configureRecyclerView();
+        this.configureOnClickRecyclerView();
 
 
         mCommentButton.setOnClickListener(new View.OnClickListener() {
@@ -60,7 +69,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
+   private void configureOnClickRecyclerView(){
+        ItemClickSupport.addTo(mListMoodRecyclerView,R.layout.list_cell)
+                .setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
+                    @Override
+                    public void onItemClicked(RecyclerView recyclerView, int position, View v) {
+                        Log.d("Debug","Position :"+position);
+                    }
+                });
+   }
 
     private void addComment() {
 
