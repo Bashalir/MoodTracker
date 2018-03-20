@@ -1,6 +1,5 @@
 package com.oc.bashalir.moodtracker.model;
 
-import android.content.Context;
 import android.media.MediaPlayer;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -10,11 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Toast;
-
 import com.oc.bashalir.moodtracker.R;
-
 import java.util.ArrayList;
 import java.util.Arrays;
+
 
 
 
@@ -32,6 +30,8 @@ public class MoodAdapter extends RecyclerView.Adapter<MoodAdapter.MoodViewHolder
 
     ArrayList<Mood> mList= new ArrayList<>(Arrays.asList(mood1, mood2, mood3, mood4, mood5));
 
+
+
     @Override
     public int getItemCount() {
         return mList.size();
@@ -41,10 +41,6 @@ public class MoodAdapter extends RecyclerView.Adapter<MoodAdapter.MoodViewHolder
     public MoodViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View view = inflater.inflate(R.layout.list_cell,parent,false);
-
-
-
-
             return new MoodViewHolder(view);
     }
 
@@ -63,6 +59,7 @@ public class MoodAdapter extends RecyclerView.Adapter<MoodAdapter.MoodViewHolder
         private Mood currentMood;
         private MediaPlayer mPlayer = null;
 
+
      public MoodViewHolder(final View itemView) {
 
          super (itemView);
@@ -74,27 +71,36 @@ public class MoodAdapter extends RecyclerView.Adapter<MoodAdapter.MoodViewHolder
               @Override
               public void onClick(View view) {
 
-                  // Display a message of the selected Mood
-                  Toast.makeText(view.getContext(), currentMood.getDescription(), Toast.LENGTH_SHORT).show(); //
+             // Display a message of the selected Mood
+                  Toast.makeText(view.getContext(), currentMood.getDescription(), Toast.LENGTH_SHORT).show();
 
                   // Play the Sound of the selected Mood
                   mPlayer = MediaPlayer.create(view.getContext(), currentMood.getSound());
                   mPlayer.start();
 
+                  Log.d("Debug","Sound :"+currentMood.getDescription());
+                  Log.d("Debug","Sound :"+currentMood.getSound());
 
               }
           });
      }
 
 
-     private void display (Mood mood) {
+     public void display (Mood mood) {
 
          currentMood = mood;
+
        Log.d("Debug","Color :"+mood.getBackColor());
        imgMood.setImageResource(mood.getSmiley());
        backMood.setBackgroundResource(mood.getBackColor());
+
      }
+        public Mood getMood() {
+            return currentMood;
+        }
     }
+
+
 
 
 

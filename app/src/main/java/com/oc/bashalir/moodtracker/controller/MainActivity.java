@@ -1,9 +1,7 @@
 package com.oc.bashalir.moodtracker.controller;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
-import android.media.Image;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,9 +15,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.oc.bashalir.moodtracker.R;
+import com.oc.bashalir.moodtracker.model.Mood;
 import com.oc.bashalir.moodtracker.model.MoodAdapter;
 
 
@@ -28,7 +26,6 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView mListMoodRecyclerView;
     private ImageView mCommentButton;
     private ImageView mHistoryButton;
-
     private SharedPreferences mPreferences;
     private int mMoodPosition=2;
 
@@ -54,17 +51,16 @@ public class MainActivity extends AppCompatActivity {
         mListMoodRecyclerView.scrollToPosition(mMoodPosition);
 
 
-
-
         mCommentButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 addComment();
-
             }
         });
 
     }
+
+
 
 
     private void addComment() {
