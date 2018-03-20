@@ -21,7 +21,7 @@ public class MoodViewHolder extends RecyclerView.ViewHolder{
         private final CardView backMood;
         private final ImageView imgMood;
         private Mood currentMood;
-        private MediaPlayer mPlayer = null;
+
 
 
         public MoodViewHolder(final View itemView) {
@@ -31,22 +31,6 @@ public class MoodViewHolder extends RecyclerView.ViewHolder{
             imgMood=(itemView.findViewById(R.id.list_cell_image_mood_img));
             backMood = (itemView.findViewById(R.id.list_cell_back_mood_cv));
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-
-                    // Display a message of the selected Mood
-                    Toast.makeText(view.getContext(), currentMood.getDescription(), Toast.LENGTH_SHORT).show();
-
-                    // Play the Sound of the selected Mood
-                    mPlayer = MediaPlayer.create(view.getContext(), currentMood.getSound());
-                    mPlayer.start();
-
-                    Log.d("Debug","Sound :"+currentMood.getDescription());
-                    Log.d("Debug","Sound :"+currentMood.getSound());
-
-                }
-            });
         }
 
 

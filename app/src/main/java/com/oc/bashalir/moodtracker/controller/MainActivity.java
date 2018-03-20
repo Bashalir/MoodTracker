@@ -1,7 +1,9 @@
 package com.oc.bashalir.moodtracker.controller;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,9 +17,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.oc.bashalir.moodtracker.R;
+import com.oc.bashalir.moodtracker.model.Mood;
 import com.oc.bashalir.moodtracker.model.MoodAdapter;
+import com.oc.bashalir.moodtracker.view.MoodViewHolder;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -28,6 +33,8 @@ public class MainActivity extends AppCompatActivity {
     private SharedPreferences mPreferences;
     private int mMoodPosition=2;
     private MoodAdapter mAdapter;
+    private MediaPlayer mPlayer = null;
+    private Context c;
 
 
     private void configureRecyclerView(){
@@ -42,7 +49,6 @@ public class MainActivity extends AppCompatActivity {
         snapHelper.attachToRecyclerView(mListMoodRecyclerView);
 
     }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,7 +81,25 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onItemClicked(RecyclerView recyclerView, int position, View v) {
                         Log.d("Debug","Position :"+position);
+
+                        c=getApplicationContext();
+
+
+                        Mood mood=mAdapter.getMood(position);
+
+                        // Display a message of the selected Mood
+                        Toast.makeText(c, mood.getDescription(), Toast.LENGTH_SHORT).show();
+
+                        // Play the Sound of the selected Mood
+                        mPlayer = MediaPlayer.create(c, mood.getSound());
+                        mPlayer.start();
+
+                        Log.d("Debug","Description :"+mood.getDescription());
+                        Log.d("Debug","Sound :"+mood.getSound());
+
                     }
+
+
                 });
    }
 

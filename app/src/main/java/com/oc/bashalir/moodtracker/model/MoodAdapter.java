@@ -54,5 +54,9 @@ public class MoodAdapter extends RecyclerView.Adapter<MoodViewHolder> {
 
     }
 
+    public Mood getMood(int position){
+        return  mList.get(position);
+    }
+
 
 }
