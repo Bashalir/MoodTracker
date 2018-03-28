@@ -22,7 +22,13 @@ import android.widget.Toast;
 import com.oc.bashalir.moodtracker.R;
 import com.oc.bashalir.moodtracker.model.Mood;
 import com.oc.bashalir.moodtracker.model.MoodAdapter;
-import com.oc.bashalir.moodtracker.view.MoodViewHolder;
+import com.oc.bashalir.moodtracker.model.MoodDay;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -31,24 +37,16 @@ public class MainActivity extends AppCompatActivity {
     private ImageView mCommentButton;
     private ImageView mHistoryButton;
     private SharedPreferences mPreferences;
-    private int mMoodPosition=2;
+    private int mMoodPosition = 2;
     private MoodAdapter mAdapter;
     private MediaPlayer mPlayer = null;
-    private Context c;
+    private Context mContext;
+    private List<MoodDay> mMoodDayList = new ArrayList<>();
+    private String mComment = null;
 
+    public static final String TAG = "MainActivity";
+    public static final String LIST_MOOD = "LIST_MOOD";
 
-    private void configureRecyclerView(){
-
-        mAdapter=new MoodAdapter();
-        mListMoodRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mListMoodRecyclerView.setAdapter(mAdapter);
-
-        mListMoodRecyclerView.scrollToPosition(mMoodPosition);
-
-        SnapHelper snapHelper = new LinearSnapHelper();
-        snapHelper.attachToRecyclerView(mListMoodRecyclerView);
-
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
         mCommentButton = findViewById(R.id.activity_main_comment_btn);
         mHistoryButton = findViewById(R.id.activity_main_history_btn);
 
-        mPreferences=getPreferences(MODE_PRIVATE);
+        mPreferences = getPreferences(MODE_PRIVATE);
 
         this.configureRecyclerView();
         this.configureOnClickRecyclerView();
@@ -74,56 +72,108 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    private void configureRecyclerView() {
 
-   private void configureOnClickRecyclerView(){
-        ItemClickSupport.addTo(mListMoodRecyclerView,R.layout.list_cell)
+        mAdapter = new MoodAdapter();
+        mListMoodRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mListMoodRecyclerView.setAdapter(mAdapter);
+
+        mListMoodRecyclerView.scrollToPosition(mMoodPosition);
+
+        SnapHelper snapHelper = new LinearSnapHelper();
+        snapHelper.attachToRecyclerView(mListMoodRecyclerView);
+
+    }
+
+    private void configureOnClickRecyclerView() {
+        ItemClickSupport.addTo(mListMoodRecyclerView, R.layout.list_cell)
                 .setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
                     @Override
                     public void onItemClicked(RecyclerView recyclerView, int position, View v) {
-                        Log.d("Debug","Position :"+position);
+                        Log.d(TAG, "Position :" + position);
 
-                        c=getApplicationContext();
+                        mContext = getApplicationContext();
 
-
-                        Mood mood=mAdapter.getMood(position);
+                        Mood mood = mAdapter.getMood(position);
 
                         // Display a message of the selected Mood
-                        Toast.makeText(c, mood.getDescription(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mContext, mood.getDescription(), Toast.LENGTH_SHORT).show();
 
                         // Play the Sound of the selected Mood
-                        mPlayer = MediaPlayer.create(c, mood.getSound());
+                        mPlayer = MediaPlayer.create(mContext, mood.getSound());
                         mPlayer.start();
 
-                        Log.d("Debug","Description :"+mood.getDescription());
-                        Log.d("Debug","Sound :"+mood.getSound());
+                        Log.d(TAG, "Description :" + mood.getDescription());
+                        Log.d(TAG, "Sound :" + mood.getSound());
+
+                        addMoodDayList(position);
+
 
                     }
-
-
                 });
-   }
+    }
+
+
+    private void addMoodDayList(int position) {
+
+        int mPositionMoodDayList=0;
+        boolean searchDay=false;
+
+        for (int i = 0; i < mMoodDayList.size(); i++) {
+            if (mMoodDayList.get(i).getDay().contains(getDay())) {
+                mPositionMoodDayList = i;
+                searchDay=true;
+                Log.d(TAG, "Mood : TRUE");
+            }
+        }
+
+        Log.d(TAG, "Date :" + getDay());
+
+        //Add the mood of the day in the list
+        MoodDay moodSelect = new MoodDay(position, mComment, getDay());
+        Log.d(TAG,"Mood :"+moodSelect.getPosition()+" "+moodSelect.getDay()+" "+moodSelect.getComment());
+
+        if (!searchDay) {
+            mMoodDayList.add(moodSelect);
+        }
+        else {
+            Log.d(TAG, "Position :" + mPositionMoodDayList);
+            Log.d(TAG, "Size :" + mMoodDayList);
+            mMoodDayList.set(mPositionMoodDayList,moodSelect);
+        }
+
+      for (MoodDay m:mMoodDayList)
+       { Log.d(TAG,"ListMood :"+m.getPosition()+" "+m.getDay()+" "+m.getComment());
+
+       }
+
+
+    }
+
 
     private void addComment() {
 
-            final EditText input = new EditText(this);
+        final EditText input = new EditText(this);
 
-            LayoutInflater inflater = LayoutInflater.from(this);
-            View mviewdialog = inflater.inflate(R.layout.comment_dialog,null,false);
+        LayoutInflater inflater = LayoutInflater.from(this);
+        View mviewdialog = inflater.inflate(R.layout.comment_dialog, null, false);
 
-            input.setInputType(InputType.TYPE_CLASS_TEXT );
-            AlertDialog builder = new AlertDialog.Builder(this)
-                    .setTitle("Comment")
+        input.setInputType(InputType.TYPE_CLASS_TEXT);
 
-                    .setView(mviewdialog)
+        AlertDialog builder = new AlertDialog.Builder(this)
+                .setTitle("Comment")
 
-                    .setPositiveButton("VALIDER", new DialogInterface.OnClickListener() {
+                .setView(mviewdialog)
+
+                .setPositiveButton("VALIDER", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
-                        mPreferences.edit().putString("comment",input.toString()).apply();
-                        Log.d("DEBUG","Comment "+input.getText().toString());
+                        mComment = input.getText().toString();
+
+                        Log.d("DEBUG", "Comment " + mComment);
                     }
-                    })
+                })
                 .setNegativeButton("ANNULER", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
@@ -133,7 +183,19 @@ public class MainActivity extends AppCompatActivity {
 
                 .show();
 
-        }
-
     }
+
+    private String getDay() {
+        Date mRightNow = new Date();
+
+        Log.d(TAG, "Now : "+mRightNow);
+
+        //Get today's date
+        SimpleDateFormat formater = null;
+        formater = new SimpleDateFormat("dd/MM/yy");
+        String dateResult = formater.format(mRightNow);
+        return dateResult;
+    }
+
+}
 
