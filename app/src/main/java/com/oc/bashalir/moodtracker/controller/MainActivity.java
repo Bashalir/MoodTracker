@@ -19,6 +19,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.oc.bashalir.moodtracker.R;
 import com.oc.bashalir.moodtracker.model.Mood;
 import com.oc.bashalir.moodtracker.model.MoodAdapter;
@@ -41,8 +43,9 @@ public class MainActivity extends AppCompatActivity {
     private MoodAdapter mAdapter;
     private MediaPlayer mPlayer = null;
     private Context mContext;
-    private List<MoodDay> mMoodDayList = new ArrayList<>();
+    protected List<MoodDay> mMoodDayList=null;
     private String mComment = null;
+    private Gson gson;
 
     public static final String TAG = "MainActivity";
     public static final String LIST_MOOD = "LIST_MOOD";
@@ -57,11 +60,14 @@ public class MainActivity extends AppCompatActivity {
         mCommentButton = findViewById(R.id.activity_main_comment_btn);
         mHistoryButton = findViewById(R.id.activity_main_history_btn);
 
-        mPreferences = getPreferences(MODE_PRIVATE);
+        mPreferences =getPreferences(MODE_PRIVATE);
+        gson= new Gson();
+
+        List<MoodDay>mMoodDayList=new ArrayList<>();
 
         this.configureRecyclerView();
         this.configureOnClickRecyclerView();
-
+        mMoodDayList=this.loadMoodDayList();
 
         mCommentButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,6 +96,9 @@ public class MainActivity extends AppCompatActivity {
                 .setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
                     @Override
                     public void onItemClicked(RecyclerView recyclerView, int position, View v) {
+
+
+
                         Log.d(TAG, "Position :" + position);
 
                         mContext = getApplicationContext();
@@ -113,19 +122,20 @@ public class MainActivity extends AppCompatActivity {
                 });
     }
 
-
-    private void addMoodDayList(int position) {
+        private void addMoodDayList(int position) {
 
         int mPositionMoodDayList=0;
         boolean searchDay=false;
 
+
+        if (!(mMoodDayList==null)){
         for (int i = 0; i < mMoodDayList.size(); i++) {
             if (mMoodDayList.get(i).getDay().contains(getDay())) {
                 mPositionMoodDayList = i;
                 searchDay=true;
                 Log.d(TAG, "Mood : TRUE");
             }
-        }
+        }}
 
         Log.d(TAG, "Date :" + getDay());
 
@@ -142,11 +152,40 @@ public class MainActivity extends AppCompatActivity {
             mMoodDayList.set(mPositionMoodDayList,moodSelect);
         }
 
+        saveMoodDayList( mMoodDayList);
+
       for (MoodDay m:mMoodDayList)
        { Log.d(TAG,"ListMood :"+m.getPosition()+" "+m.getDay()+" "+m.getComment());
 
        }
 
+
+    }
+
+    protected List<MoodDay> loadMoodDayList(){
+
+        // mPreferences = mContext.getSharedPreferences("MOOD", Context.MODE_PRIVATE);
+
+
+        String json = mPreferences.getString(LIST_MOOD,null);
+
+        if (json !=null)
+            mMoodDayList=gson.fromJson(json, new TypeToken<ArrayList<MoodDay>>() {}.getType());
+
+
+        for (MoodDay m:mMoodDayList)
+        { Log.d(TAG,"ListMood :"+m.getPosition()+" "+m.getDay()+" "+m.getComment());
+
+        }
+
+        return mMoodDayList;
+    }
+
+    private void saveMoodDayList(List<MoodDay> moodDayList){
+
+        mPreferences.edit()
+                .putString(LIST_MOOD,gson.toJson(moodDayList))
+                .apply();
 
     }
 

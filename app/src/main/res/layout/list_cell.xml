@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/list_cell_back_mood_cv"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    app:cardBackgroundColor="@color/colorPrimary"
-    >
+    app:cardBackgroundColor="@color/colorPrimary">
 
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
         <ImageView
             android:id="@+id/list_cell_image_mood_img"
             android:layout_width="wrap_content"
@@ -20,7 +19,7 @@
             android:layout_centerInParent="true"
             android:gravity="center_vertical"
             android:src="@drawable/smiley_super_happy"
-            android:contentDescription="happy"/>
-</RelativeLayout>
+            android:contentDescription="happy" />
+    </RelativeLayout>
 
 </android.support.v7.widget.CardView>
