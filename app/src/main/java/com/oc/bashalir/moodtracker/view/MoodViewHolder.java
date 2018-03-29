@@ -1,12 +1,10 @@
 package com.oc.bashalir.moodtracker.view;
 
-import android.media.MediaPlayer;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.oc.bashalir.moodtracker.R;
 import com.oc.bashalir.moodtracker.model.Mood;

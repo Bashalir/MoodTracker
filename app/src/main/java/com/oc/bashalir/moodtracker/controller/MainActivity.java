@@ -2,6 +2,7 @@ package com.oc.bashalir.moodtracker.controller;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.support.v7.app.AlertDialog;
@@ -76,6 +77,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        mHistoryButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent historyActivityIntent=new Intent(mContext, HistoryActivity.class);
+               // historyActivityIntent.putExtra();
+                startActivity(historyActivityIntent);
+            }
+        });
+
     }
 
     private void configureRecyclerView() {
@@ -116,7 +126,6 @@ public class MainActivity extends AppCompatActivity {
                         Log.d(TAG, "Sound :" + mood.getSound());
 
                         addMoodDayList(position);
-
 
                     }
                 });
@@ -162,10 +171,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    protected List<MoodDay> loadMoodDayList(){
-
-        // mPreferences = mContext.getSharedPreferences("MOOD", Context.MODE_PRIVATE);
-
+    public List<MoodDay> loadMoodDayList(){
 
         String json = mPreferences.getString(LIST_MOOD,null);
 
@@ -175,7 +181,6 @@ public class MainActivity extends AppCompatActivity {
 
         for (MoodDay m:mMoodDayList)
         { Log.d(TAG,"ListMood :"+m.getPosition()+" "+m.getDay()+" "+m.getComment());
-
         }
 
         return mMoodDayList;
@@ -219,7 +224,6 @@ public class MainActivity extends AppCompatActivity {
 
                     }
                 })
-
                 .show();
 
     }
@@ -235,6 +239,8 @@ public class MainActivity extends AppCompatActivity {
         String dateResult = formater.format(mRightNow);
         return dateResult;
     }
+
+
 
 }
 
