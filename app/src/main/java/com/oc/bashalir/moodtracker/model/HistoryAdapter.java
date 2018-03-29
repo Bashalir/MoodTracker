@@ -7,7 +7,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -17,9 +16,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static android.content.Context.MODE_PRIVATE;
 import static com.oc.bashalir.moodtracker.controller.MainActivity.LIST_MOOD;
-
 
 /**
  * Created by Sumer on 10/03/2018.
@@ -29,20 +26,36 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
 
 
     private SharedPreferences mPreferences;
-    private Gson gson;
-    protected List<MoodDay> mMoodDayList=null;
+    protected List<MoodDay> mMoodDayList=new ArrayList<>();
     public static final String TAG = "HistoryActivity";
 
 
+    public HistoryAdapter(String json) {
+
+            List<MoodDay> moodDayList=new ArrayList<>();
+            Gson gson;
+            gson= new Gson();
+
+
+            Log.d(TAG,json);
+
+            if (json !=null)
+                mMoodDayList=gson.fromJson(json, new TypeToken<ArrayList<MoodDay>>() {}.getType());
+
+            for (MoodDay m:mMoodDayList)
+            { Log.d(TAG,"ListMood :"+m.getPosition()+" "+m.getDay()+" "+m.getComment());
+
+            }
+    }
+
     @Override
     public int getItemCount() {
+
         return mMoodDayList.size();
     }
 
     @Override
     public HistoryViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-
-        mMoodDayList=this.loadMoodDayList();
 
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View view = inflater.inflate(R.layout.list_bar,parent,false);
@@ -57,6 +70,9 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
         holder.display(moodDay);
 
     }
+
+
+
 
     public class HistoryViewHolder extends RecyclerView.ViewHolder{
 
@@ -87,22 +103,5 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
         }
     }
 
-    private List<MoodDay> loadMoodDayList(){
-        List<MoodDay> mMoodDayList=new ArrayList<>();
 
-        gson= new Gson();
-
-        String json = mPreferences.getString(LIST_MOOD,null);
-
-
-        if (json !=null)
-            mMoodDayList=gson.fromJson(json, new TypeToken<ArrayList<MoodDay>>() {}.getType());
-
-        for (MoodDay m:mMoodDayList)
-        { Log.d(TAG,"ListMood :"+m.getPosition()+" "+m.getDay()+" "+m.getComment());
-
-        }
-
-        return mMoodDayList;
-    }
 }

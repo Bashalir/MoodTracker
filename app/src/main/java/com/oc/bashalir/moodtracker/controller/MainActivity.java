@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
         mCommentButton = findViewById(R.id.activity_main_comment_btn);
         mHistoryButton = findViewById(R.id.activity_main_history_btn);
 
-        mPreferences =getPreferences(MODE_PRIVATE);
+        mPreferences = getPreferences(MODE_PRIVATE);
         gson= new Gson();
 
         List<MoodDay>mMoodDayList=new ArrayList<>();
@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
         mHistoryButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent historyActivityIntent=new Intent(mContext, HistoryActivity.class);
+                Intent historyActivityIntent=new Intent(MainActivity.this, HistoryActivity.class);
                // historyActivityIntent.putExtra();
                 startActivity(historyActivityIntent);
             }
