@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
     protected List<MoodDay> mMoodDayList=null;
     private String mComment = null;
     private Gson gson;
+    private String json;
 
     public static final String TAG = "MainActivity";
     public static final String LIST_MOOD = "LIST_MOOD";
@@ -81,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent historyActivityIntent=new Intent(MainActivity.this, HistoryActivity.class);
-               // historyActivityIntent.putExtra();
+                historyActivityIntent.putExtra("JSON",json);
                 startActivity(historyActivityIntent);
             }
         });
@@ -173,7 +174,7 @@ public class MainActivity extends AppCompatActivity {
 
     public List<MoodDay> loadMoodDayList(){
 
-        String json = mPreferences.getString(LIST_MOOD,null);
+        json = mPreferences.getString(LIST_MOOD,null);
 
         if (json !=null)
             mMoodDayList=gson.fromJson(json, new TypeToken<ArrayList<MoodDay>>() {}.getType());

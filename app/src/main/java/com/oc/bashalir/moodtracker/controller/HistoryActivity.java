@@ -2,6 +2,7 @@ package com.oc.bashalir.moodtracker.controller;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -34,26 +35,24 @@ public class HistoryActivity extends AppCompatActivity {
 
         mHistoryRecyclerView = findViewById(R.id.activity_history_listMood_rv);
 
-        loadMoodDayList();
-        /*
+        String json=getIntent().getExtras().getString("JSON");
+
+        Log.d("JSON",json);
+
         mHistoryRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        String json = getPreferences(MODE_PRIVATE).getString(LIST_MOOD,null);
-        mHistoryRecyclerView.setAdapter(new HistoryAdapter(json));*/
+        mHistoryRecyclerView.setAdapter(new HistoryAdapter(loadMoodDayList(json)));
 
     }
 
 
-    public List<MoodDay> loadMoodDayList(){
+    public List<MoodDay> loadMoodDayList(String json){
 
-        SharedPreferences mPreferences=getSharedPreferences(LIST_MOOD, Context.MODE_PRIVATE);
         List<MoodDay> mMoodDayList= new ArrayList<>();
 
         Gson gson;
         gson= new Gson();
 
-        String json = mPreferences.getString(LIST_MOOD,null);
-
-        if (json !=null)
+          if (json !=null)
             mMoodDayList=gson.fromJson(json, new TypeToken<ArrayList<MoodDay>>() {}.getType());
 
 

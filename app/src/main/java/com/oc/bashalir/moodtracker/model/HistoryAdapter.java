@@ -30,22 +30,10 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
     public static final String TAG = "HistoryActivity";
 
 
-    public HistoryAdapter(String json) {
+    public HistoryAdapter(List<MoodDay> listMoodDay ) {
 
-            List<MoodDay> moodDayList=new ArrayList<>();
-            Gson gson;
-            gson= new Gson();
+        mMoodDayList=listMoodDay;
 
-
-            Log.d(TAG,json);
-
-            if (json !=null)
-                mMoodDayList=gson.fromJson(json, new TypeToken<ArrayList<MoodDay>>() {}.getType());
-
-            for (MoodDay m:mMoodDayList)
-            { Log.d(TAG,"ListMood :"+m.getPosition()+" "+m.getDay()+" "+m.getComment());
-
-            }
     }
 
     @Override
