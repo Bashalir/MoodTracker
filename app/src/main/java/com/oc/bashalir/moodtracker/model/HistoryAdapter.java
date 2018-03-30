@@ -1,22 +1,19 @@
 package com.oc.bashalir.moodtracker.model;
 
 import android.content.SharedPreferences;
+import android.content.res.TypedArray;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.LayoutInflater;
+import android.util.Log;import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.oc.bashalir.moodtracker.R;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.oc.bashalir.moodtracker.controller.MainActivity.LIST_MOOD;
 
 /**
  * Created by Sumer on 10/03/2018.
@@ -28,12 +25,13 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
     private SharedPreferences mPreferences;
     protected List<MoodDay> mMoodDayList=new ArrayList<>();
     public static final String TAG = "HistoryActivity";
+    private static TypedArray tColor;
 
 
-    public HistoryAdapter(List<MoodDay> listMoodDay ) {
+    public HistoryAdapter(List<MoodDay> listMoodDay, TypedArray Color) {
 
         mMoodDayList=listMoodDay;
-
+        tColor=Color;
     }
 
     @Override
@@ -61,7 +59,6 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
 
 
 
-
     public class HistoryViewHolder extends RecyclerView.ViewHolder{
 
         private final CardView backHistory;
@@ -75,18 +72,8 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
 
             int position=moodDay.getPosition();
 
-            // THE MOOD LIST DATA
-            Mood mood1= new Mood(R.drawable.smiley_sad,R.color.faded_red,"Sad",R.raw.sad);
-            Mood mood2= new Mood(R.drawable.smiley_disappointed,R.color.warm_grey,"Disappointed",R.raw.disappointed);
-            Mood mood3= new Mood(R.drawable.smiley_normal,R.color.cornflower_blue_65, "Normal",R.raw.normal);
-            Mood mood4= new Mood(R.drawable.smiley_happy,R.color.light_sage,"Happy",R.raw.happy);
-            Mood mood5= new Mood(R.drawable.smiley_super_happy,R.color.banana_yellow,"Super Happy",R.raw.superhappy);
 
-            ArrayList<Mood> mList= new ArrayList<>(Arrays.asList(mood1, mood2, mood3, mood4, mood5));
-
-            Mood mood = mList.get(position);
-
-            backHistory.setCardBackgroundColor(mood.getBackColor());
+            backHistory.setBackgroundResource(tColor.getResourceId(position, position));
 
         }
     }

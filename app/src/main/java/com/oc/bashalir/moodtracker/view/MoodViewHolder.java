@@ -1,5 +1,6 @@
 package com.oc.bashalir.moodtracker.view;
 
+
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -21,7 +22,6 @@ public class MoodViewHolder extends RecyclerView.ViewHolder{
         private Mood currentMood;
 
 
-
         public MoodViewHolder(final View itemView) {
 
             super (itemView);
@@ -31,16 +31,14 @@ public class MoodViewHolder extends RecyclerView.ViewHolder{
 
         }
 
-
         public void display (Mood mood) {
 
             currentMood = mood;
 
-            Log.d("Debug","Color :"+mood.getBackColor());
-            imgMood.setImageResource(mood.getSmiley());
+            Log.d("Debug","Color :"+mood.getBackColor()+" "+R.color.banana_yellow);
+            imgMood.setImageDrawable(mood.getSmiley());
             backMood.setBackgroundResource(mood.getBackColor());
 
         }
-
 
 }

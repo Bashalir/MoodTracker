@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
+import android.content.res.TypedArray;
 import android.media.MediaPlayer;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -29,6 +31,7 @@ import com.oc.bashalir.moodtracker.model.MoodDay;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -44,14 +47,18 @@ public class MainActivity extends AppCompatActivity {
     private MoodAdapter mAdapter;
     private MediaPlayer mPlayer = null;
     private Context mContext;
-    protected List<MoodDay> mMoodDayList=null;
+    protected List<MoodDay> mMoodDayList = null;
     private String mComment = null;
     private Gson gson;
     private String json;
 
+    public static TypedArray tSmiley ;
+    public static TypedArray tColor;
+    public static String[] tDescription;
+    public static TypedArray tSound;
+
     public static final String TAG = "MainActivity";
     public static final String LIST_MOOD = "LIST_MOOD";
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,13 +70,13 @@ public class MainActivity extends AppCompatActivity {
         mHistoryButton = findViewById(R.id.activity_main_history_btn);
 
         mPreferences = getPreferences(MODE_PRIVATE);
-        gson= new Gson();
+        gson = new Gson();
 
-        List<MoodDay>mMoodDayList=new ArrayList<>();
+        List<MoodDay> mMoodDayList = new ArrayList<>();
 
         this.configureRecyclerView();
         this.configureOnClickRecyclerView();
-        mMoodDayList=this.loadMoodDayList();
+        mMoodDayList = this.loadMoodDayList();
 
         mCommentButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,8 +88,8 @@ public class MainActivity extends AppCompatActivity {
         mHistoryButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent historyActivityIntent=new Intent(MainActivity.this, HistoryActivity.class);
-                historyActivityIntent.putExtra("JSON",json);
+                Intent historyActivityIntent = new Intent(MainActivity.this, HistoryActivity.class);
+                historyActivityIntent.putExtra("JSON", json);
                 startActivity(historyActivityIntent);
             }
         });
@@ -91,7 +98,25 @@ public class MainActivity extends AppCompatActivity {
 
     private void configureRecyclerView() {
 
-        mAdapter = new MoodAdapter();
+        Resources res = getResources();
+
+         tSmiley = res.obtainTypedArray(R.array.smiley);
+         tColor = res.obtainTypedArray(R.array.color);
+         tDescription = res.getStringArray(R.array.description);
+         tSound = res.obtainTypedArray(R.array.sound);
+
+
+        Mood[] tMood = new Mood[5];
+
+        for (int i = 0; i <= 4; i++) {
+            tMood[i] = new Mood(tSmiley.getDrawable(i), tColor.getResourceId(i, i), tDescription[i], tSound.getResourceId(i, i));
+             Log.d(TAG,tSmiley.getDrawable(i)+" "+ tColor.getResourceId(i, i)+" " +tDescription[i]+ " "+tSound.getResourceId(i, i));
+        }
+
+        ArrayList<Mood> mList = new ArrayList<>(Arrays.asList(tMood[0], tMood[1], tMood[2], tMood[3], tMood[4]));
+
+
+        mAdapter = new MoodAdapter(mList);
         mListMoodRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mListMoodRecyclerView.setAdapter(mAdapter);
 
@@ -107,7 +132,6 @@ public class MainActivity extends AppCompatActivity {
                 .setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
                     @Override
                     public void onItemClicked(RecyclerView recyclerView, int position, View v) {
-
 
 
                         Log.d(TAG, "Position :" + position);
@@ -132,65 +156,66 @@ public class MainActivity extends AppCompatActivity {
                 });
     }
 
-        private void addMoodDayList(int position) {
+    private void addMoodDayList(int position) {
 
-        int mPositionMoodDayList=0;
-        boolean searchDay=false;
+        int mPositionMoodDayList = 0;
+        boolean searchDay = false;
 
 
-        if (!(mMoodDayList==null)){
-        for (int i = 0; i < mMoodDayList.size(); i++) {
-            if (mMoodDayList.get(i).getDay().contains(getDay())) {
-                mPositionMoodDayList = i;
-                searchDay=true;
-                Log.d(TAG, "Mood : TRUE");
+        if (!(mMoodDayList == null)) {
+            for (int i = 0; i < mMoodDayList.size(); i++) {
+                if (mMoodDayList.get(i).getDay().contains(getDay())) {
+                    mPositionMoodDayList = i;
+                    searchDay = true;
+                    Log.d(TAG, "Mood : TRUE");
+                }
             }
-        }}
+        }
 
         Log.d(TAG, "Date :" + getDay());
 
         //Add the mood of the day in the list
         MoodDay moodSelect = new MoodDay(position, mComment, getDay());
-        Log.d(TAG,"Mood :"+moodSelect.getPosition()+" "+moodSelect.getDay()+" "+moodSelect.getComment());
+        Log.d(TAG, "Mood :" + moodSelect.getPosition() + " " + moodSelect.getDay() + " " + moodSelect.getComment());
 
         if (!searchDay) {
             mMoodDayList.add(moodSelect);
-        }
-        else {
+        } else {
             Log.d(TAG, "Position :" + mPositionMoodDayList);
             Log.d(TAG, "Size :" + mMoodDayList);
-            mMoodDayList.set(mPositionMoodDayList,moodSelect);
+            mMoodDayList.set(mPositionMoodDayList, moodSelect);
         }
 
-        saveMoodDayList( mMoodDayList);
+        saveMoodDayList(mMoodDayList);
 
-      for (MoodDay m:mMoodDayList)
-       { Log.d(TAG,"ListMood :"+m.getPosition()+" "+m.getDay()+" "+m.getComment());
+        for (MoodDay m : mMoodDayList) {
+            Log.d(TAG, "ListMood :" + m.getPosition() + " " + m.getDay() + " " + m.getComment());
 
-       }
+        }
 
 
     }
 
-    public List<MoodDay> loadMoodDayList(){
+    public List<MoodDay> loadMoodDayList() {
 
-        json = mPreferences.getString(LIST_MOOD,null);
+        json = mPreferences.getString(LIST_MOOD, null);
 
-        if (json !=null)
-            mMoodDayList=gson.fromJson(json, new TypeToken<ArrayList<MoodDay>>() {}.getType());
+        if (json != null)
+            mMoodDayList = gson.fromJson(json, new TypeToken<ArrayList<MoodDay>>() {
+            }.getType());
 
 
-        for (MoodDay m:mMoodDayList)
-        { Log.d(TAG,"ListMood :"+m.getPosition()+" "+m.getDay()+" "+m.getComment());
+        for (MoodDay m : mMoodDayList) {
+            Log.d(TAG, "ListMood :" + m.getPosition() + " " + m.getDay() + " " + m.getComment());
         }
 
         return mMoodDayList;
     }
 
-    private void saveMoodDayList(List<MoodDay> moodDayList){
+    private void saveMoodDayList(List<MoodDay> moodDayList) {
 
         mPreferences.edit()
-                .putString(LIST_MOOD,gson.toJson(moodDayList))
+                .putString(LIST_MOOD, gson.toJson(moodDayList))
                 .apply();
 
     }
@@ -232,7 +257,7 @@ public class MainActivity extends AppCompatActivity {
     private String getDay() {
         Date mRightNow = new Date();
 
-        Log.d(TAG, "Now : "+mRightNow);
+        Log.d(TAG, "Now : " + mRightNow);
 
         //Get today's date
         SimpleDateFormat formater = null;
@@ -240,7 +265,6 @@ public class MainActivity extends AppCompatActivity {
         String dateResult = formater.format(mRightNow);
         return dateResult;
     }
-
 
 
 }

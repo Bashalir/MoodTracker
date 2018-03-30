@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.oc.bashalir.moodtracker.controller.MainActivity.LIST_MOOD;
+import static com.oc.bashalir.moodtracker.controller.MainActivity.tColor;
 
 
 public class HistoryActivity extends AppCompatActivity {
@@ -39,8 +40,9 @@ public class HistoryActivity extends AppCompatActivity {
 
         Log.d("JSON",json);
 
+
         mHistoryRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mHistoryRecyclerView.setAdapter(new HistoryAdapter(loadMoodDayList(json)));
+        mHistoryRecyclerView.setAdapter(new HistoryAdapter(loadMoodDayList(json),tColor));
 
     }
 
