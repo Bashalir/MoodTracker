@@ -200,22 +200,28 @@ public class MainActivity extends AppCompatActivity {
 
         json = mPreferences.getString(LIST_MOOD, null);
 
-        if (json != null)
+        if (json != null){
             mMoodDayList = gson.fromJson(json, new TypeToken<ArrayList<MoodDay>>() {
             }.getType());
-
+            mHistoryButton.setVisibility(View.VISIBLE);
 
         for (MoodDay m : mMoodDayList) {
             Log.d(TAG, "ListMood :" + m.getPosition() + " " + m.getDay() + " " + m.getComment());
         }
 
-        return mMoodDayList;
+        return mMoodDayList;}
+        else{mHistoryButton.setVisibility(View.INVISIBLE);
+
+        }
+        return mMoodDayList=new ArrayList<>();
     }
 
     private void saveMoodDayList(List<MoodDay> moodDayList) {
 
+        json=gson.toJson(moodDayList);
+
         mPreferences.edit()
-                .putString(LIST_MOOD, gson.toJson(moodDayList))
+                .putString(LIST_MOOD,json)
                 .apply();
 
     }

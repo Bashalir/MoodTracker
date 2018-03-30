@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -28,7 +29,6 @@ public class HistoryActivity extends AppCompatActivity {
     private RecyclerView mHistoryRecyclerView;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,30 +36,37 @@ public class HistoryActivity extends AppCompatActivity {
 
         mHistoryRecyclerView = findViewById(R.id.activity_history_listMood_rv);
 
-        String json=getIntent().getExtras().getString("JSON");
+        String json = getIntent().getExtras().getString("JSON");
 
-        Log.d("JSON",json);
+        if (json != null) {
 
 
+            Log.d("JSON", json);
+
+        } else {
+            // Display a message of no registred
+            Toast.makeText(getApplicationContext(), "Aucun Enregistrement", Toast.LENGTH_SHORT).show();
+        }
         mHistoryRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mHistoryRecyclerView.setAdapter(new HistoryAdapter(loadMoodDayList(json),tColor));
+        mHistoryRecyclerView.setAdapter(new HistoryAdapter(loadMoodDayList(json), tColor));
 
     }
 
 
-    public List<MoodDay> loadMoodDayList(String json){
+    public List<MoodDay> loadMoodDayList(String json) {
 
-        List<MoodDay> mMoodDayList= new ArrayList<>();
+        List<MoodDay> mMoodDayList = new ArrayList<>();
 
         Gson gson;
-        gson= new Gson();
+        gson = new Gson();
 
-          if (json !=null)
-            mMoodDayList=gson.fromJson(json, new TypeToken<ArrayList<MoodDay>>() {}.getType());
+        if (json != null)
+            mMoodDayList = gson.fromJson(json, new TypeToken<ArrayList<MoodDay>>() {
+            }.getType());
 
 
-        for (MoodDay m:mMoodDayList)
-        { Log.d("History","ListMood :"+m.getPosition()+" "+m.getDay()+" "+m.getComment());
+        for (MoodDay m : mMoodDayList) {
+            Log.d("History", "ListMood :" + m.getPosition() + " " + m.getDay() + " " + m.getComment());
         }
 
         return mMoodDayList;
