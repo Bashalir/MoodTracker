@@ -9,9 +9,9 @@ public class MoodDay  {
 
     private Integer mPosition; // the position of the mood select for the day
     private String mComment; // comment of the day
-    private String mDay; // Day of the Mood
+    private Date mDay; // Day of the Mood
 
-    public MoodDay(Integer position, String comment, String date) {
+    public MoodDay(Integer position, String comment, Date date) {
         this.setPosition(position);
         this.setComment(comment);
         this.setDate(date);
@@ -33,11 +33,11 @@ public class MoodDay  {
         mComment = comment;
     }
 
-    public String getDay() {
+    public Date getDay() {
         return mDay;
     }
 
-    public void setDate(String day) {
+    public void setDate(Date day) {
         mDay = day;
     }
 

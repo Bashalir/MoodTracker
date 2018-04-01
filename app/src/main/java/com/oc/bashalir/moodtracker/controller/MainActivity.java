@@ -30,6 +30,7 @@ import com.oc.bashalir.moodtracker.model.MoodAdapter;
 import com.oc.bashalir.moodtracker.model.MoodDay;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -51,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
     private String mComment = null;
     private Gson gson;
     private String json;
+    private Date mRightNow;
 
     public static TypedArray tSmiley ;
     public static TypedArray tColor;
@@ -151,6 +153,7 @@ public class MainActivity extends AppCompatActivity {
                         Log.d(TAG, "Sound :" + mood.getSound());
 
                         addMoodDayList(position);
+                        mHistoryButton.setVisibility(View.VISIBLE);
 
                     }
                 });
@@ -158,24 +161,28 @@ public class MainActivity extends AppCompatActivity {
 
     private void addMoodDayList(int position) {
 
+        mRightNow = new Date();
         int mPositionMoodDayList = 0;
         boolean searchDay = false;
 
 
+
         if (!(mMoodDayList == null)) {
             for (int i = 0; i < mMoodDayList.size(); i++) {
-                if (mMoodDayList.get(i).getDay().contains(getDay())) {
+
+                if (formatDate(mMoodDayList.get(i).getDay()).contains(formatDate(mRightNow))) {
                     mPositionMoodDayList = i;
                     searchDay = true;
                     Log.d(TAG, "Mood : TRUE");
                 }
+
             }
         }
 
-        Log.d(TAG, "Date :" + getDay());
+        Log.d(TAG, "Date :" +mRightNow);
 
         //Add the mood of the day in the list
-        MoodDay moodSelect = new MoodDay(position, mComment, getDay());
+        MoodDay moodSelect = new MoodDay(position, mComment, mRightNow);
         Log.d(TAG, "Mood :" + moodSelect.getPosition() + " " + moodSelect.getDay() + " " + moodSelect.getComment());
 
         if (!searchDay) {
@@ -260,15 +267,13 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private String getDay() {
-        Date mRightNow = new Date();
+    private String formatDate(Date date) {
 
-        Log.d(TAG, "Now : " + mRightNow);
-
-        //Get today's date
+        //Get format date
         SimpleDateFormat formater = null;
         formater = new SimpleDateFormat("dd/MM/yy");
-        String dateResult = formater.format(mRightNow);
+
+        String dateResult = formater.format(date);
         return dateResult;
     }
 
