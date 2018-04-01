@@ -167,8 +167,6 @@ public class MainActivity extends AppCompatActivity {
         int mPositionMoodDayList = 0;
         boolean searchDay = false;
 
-
-
         if (!(mMoodDayList == null)) {
             for (int i = 0; i < mMoodDayList.size(); i++) {
 
@@ -202,14 +200,11 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
-
     }
 
     public List<MoodDay> loadMoodDayList() {
 
         json = mPreferences.getString(LIST_MOOD, null);
-
-
 
         if (json != null){
 
@@ -245,7 +240,6 @@ public class MainActivity extends AppCompatActivity {
                 .apply();
 
     }
-
 
     private void addComment() {
 

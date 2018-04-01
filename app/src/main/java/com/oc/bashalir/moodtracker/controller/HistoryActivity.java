@@ -1,13 +1,10 @@
 package com.oc.bashalir.moodtracker.controller;
 
-
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -20,19 +17,24 @@ import com.oc.bashalir.moodtracker.model.MoodDay;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.oc.bashalir.moodtracker.controller.MainActivity.LIST_MOOD;
 import static com.oc.bashalir.moodtracker.controller.MainActivity.tColor;
 
 
 public class HistoryActivity extends AppCompatActivity {
 
     private RecyclerView mHistoryRecyclerView;
-
+    public static final String TAG = "HistoryActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history);
+
+        DisplayMetrics metrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(metrics);
+
+       // Log.d(TAG, "Screen Dimension : " + metrics.widthPixels+" "+metrics.heightPixels);
+
 
         mHistoryRecyclerView = findViewById(R.id.activity_history_listMood_rv);
 
@@ -48,7 +50,7 @@ public class HistoryActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Aucun Enregistrement", Toast.LENGTH_SHORT).show();
         }
         mHistoryRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mHistoryRecyclerView.setAdapter(new HistoryAdapter(loadMoodDayList(json), tColor));
+        mHistoryRecyclerView.setAdapter(new HistoryAdapter(loadMoodDayList(json), tColor,metrics.heightPixels,metrics.widthPixels));
 
     }
 
@@ -64,9 +66,8 @@ public class HistoryActivity extends AppCompatActivity {
             mMoodDayList = gson.fromJson(json, new TypeToken<ArrayList<MoodDay>>() {
             }.getType());
 
-
         for (MoodDay m : mMoodDayList) {
-            Log.d("History", "ListMood :" + m.getPosition() + " " + m.getDay() + " " + m.getComment());
+            Log.d(TAG, "ListMood :" + m.getPosition() + " " + m.getDay() + " " + m.getComment());
         }
 
         return mMoodDayList;
