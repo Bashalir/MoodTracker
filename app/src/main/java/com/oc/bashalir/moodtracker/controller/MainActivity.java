@@ -34,6 +34,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -207,7 +209,10 @@ public class MainActivity extends AppCompatActivity {
 
         json = mPreferences.getString(LIST_MOOD, null);
 
+
+
         if (json != null){
+
             mMoodDayList = gson.fromJson(json, new TypeToken<ArrayList<MoodDay>>() {
             }.getType());
             mHistoryButton.setVisibility(View.VISIBLE);
@@ -224,6 +229,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void saveMoodDayList(List<MoodDay> moodDayList) {
+
+        Collections.sort(moodDayList, new Comparator<MoodDay>() {
+            @Override
+            public int compare(MoodDay o1, MoodDay o2) {
+
+                return o1.getDay().compareTo(o2.getDay());
+            }
+        });
 
         json=gson.toJson(moodDayList);
 
