@@ -3,10 +3,10 @@ package com.oc.bashalir.moodtracker.model;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.DisplayMetrics;
-import android.util.Log;import android.view.LayoutInflater;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -17,7 +17,6 @@ import com.oc.bashalir.moodtracker.R;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -100,7 +99,16 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
            commentHistory.setOnClickListener(new View.OnClickListener() {
                @Override
                public void onClick(View v) {
-                   Toast.makeText(commentHistory.getContext(),mComment, Toast.LENGTH_SHORT).show();
+
+                   Toast toast= Toast.makeText(commentHistory.getContext(), mComment, Toast.LENGTH_SHORT);
+                   View view = toast.getView();
+
+                   TextView text= view.findViewById(android.R.id.message);
+                   text.setTextColor(Color.WHITE);
+                   toast.setDuration(Toast.LENGTH_LONG);
+                   toast.getView().setBackgroundColor(Color.DKGRAY);
+                   toast.show();
+
                }
            });
 
