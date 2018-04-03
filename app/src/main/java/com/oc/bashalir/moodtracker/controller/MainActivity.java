@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
     private String json;
     private Date mRightNow;
 
-    public static TypedArray tSmiley ;
+    public static TypedArray tSmiley;
     public static TypedArray tColor;
     public static String[] tDescription;
     public static TypedArray tSound;
@@ -107,17 +107,17 @@ public class MainActivity extends AppCompatActivity {
 
         Resources res = getResources();
 
-         tSmiley = res.obtainTypedArray(R.array.smiley);
-         tColor = res.obtainTypedArray(R.array.color);
-         tDescription = res.getStringArray(R.array.description);
-         tSound = res.obtainTypedArray(R.array.sound);
+        tSmiley = res.obtainTypedArray(R.array.smiley);
+        tColor = res.obtainTypedArray(R.array.color);
+        tDescription = res.getStringArray(R.array.description);
+        tSound = res.obtainTypedArray(R.array.sound);
 
 
         Mood[] tMood = new Mood[5];
 
         for (int i = 0; i <= 4; i++) {
             tMood[i] = new Mood(tSmiley.getDrawable(i), tColor.getResourceId(i, i), tDescription[i], tSound.getResourceId(i, i));
-             Log.d(TAG,tSmiley.getDrawable(i)+" "+ tColor.getResourceId(i, i)+" " +tDescription[i]+ " "+tSound.getResourceId(i, i));
+            Log.d(TAG, tSmiley.getDrawable(i) + " " + tColor.getResourceId(i, i) + " " + tDescription[i] + " " + tSound.getResourceId(i, i));
         }
 
         ArrayList<Mood> mList = new ArrayList<>(Arrays.asList(tMood[0], tMood[1], tMood[2], tMood[3], tMood[4]));
@@ -182,7 +182,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        Log.d(TAG, "Date :" +mRightNow);
+        Log.d(TAG, "Date :" + mRightNow);
 
         //Add the mood of the day in the list
         MoodDay moodSelect = new MoodDay(position, mComment, mRightNow);
@@ -209,21 +209,22 @@ public class MainActivity extends AppCompatActivity {
 
         json = mPreferences.getString(LIST_MOOD, null);
 
-        if (json != null){
+        if (json != null) {
 
             mMoodDayList = gson.fromJson(json, new TypeToken<ArrayList<MoodDay>>() {
             }.getType());
             mHistoryButton.setVisibility(View.VISIBLE);
 
-        for (MoodDay m : mMoodDayList) {
-            Log.d(TAG, "ListMood :" + m.getPosition() + " " + m.getDay() + " " + m.getComment());
-        }
+            for (MoodDay m : mMoodDayList) {
+                Log.d(TAG, "ListMood :" + m.getPosition() + " " + m.getDay() + " " + m.getComment());
+            }
 
-        return mMoodDayList;}
-        else{mHistoryButton.setVisibility(View.INVISIBLE);
+            return mMoodDayList;
+        } else {
+            mHistoryButton.setVisibility(View.INVISIBLE);
 
         }
-        return mMoodDayList=new ArrayList<>();
+        return mMoodDayList = new ArrayList<>();
     }
 
     private void saveMoodDayList(List<MoodDay> moodDayList) {
@@ -236,10 +237,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        json=gson.toJson(moodDayList);
+        json = gson.toJson(moodDayList);
 
         mPreferences.edit()
-                .putString(LIST_MOOD,json)
+                .putString(LIST_MOOD, json)
                 .apply();
 
     }
@@ -249,22 +250,24 @@ public class MainActivity extends AppCompatActivity {
         final EditText input = new EditText(this);
 
         LayoutInflater inflater = LayoutInflater.from(this);
-        View mviewdialog = inflater.inflate(R.layout.comment_dialog, null, false);
+        View mViewDialog = inflater.inflate(R.layout.comment_dialog, null, false);
 
         input.setInputType(InputType.TYPE_CLASS_TEXT);
 
         AlertDialog builder = new AlertDialog.Builder(this)
                 .setTitle("Comment")
 
-                .setView(mviewdialog)
+                .setView(mViewDialog)
 
                 .setPositiveButton("VALIDER", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
-                        mComment = input.getText().toString();
+                        EditText commentEditText = ((AlertDialog) dialog).findViewById(R.id.comment_dialog_comment_etx);
 
-                        Log.d("DEBUG", "Comment " + mComment);
+                        mComment = commentEditText.getText().toString();
+
+                        Log.d("DEBUG", "Comment :" + mComment);
                     }
                 })
                 .setNegativeButton("ANNULER", new DialogInterface.OnClickListener() {
@@ -277,7 +280,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private String formatDate(Date date) {
+    public String formatDate(Date date) {
 
         //Get format date
         SimpleDateFormat formater = null;

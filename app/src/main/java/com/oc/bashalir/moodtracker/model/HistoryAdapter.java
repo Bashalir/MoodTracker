@@ -1,5 +1,6 @@
 package com.oc.bashalir.moodtracker.model;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.TypedArray;
 import android.support.v7.widget.CardView;
@@ -8,11 +9,16 @@ import android.util.DisplayMetrics;
 import android.util.Log;import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.oc.bashalir.moodtracker.R;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 
@@ -29,6 +35,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
     private static TypedArray tColor;
     private int mHeight;
     private int mWidth;
+    private Context mContext;
 
     public HistoryAdapter(List<MoodDay> listMoodDay, TypedArray Color, int x, int y) {
 
@@ -36,7 +43,6 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
         mWidth=y;
         mMoodDayList=listMoodDay;
         tColor=Color;
-        Log.d(TAG,"Screen Dimensions :"+mHeight+"x"+mWidth+" px");
     }
 
     @Override
@@ -62,19 +68,27 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
 
     }
 
-
-
     public class HistoryViewHolder extends RecyclerView.ViewHolder{
 
         private final CardView backHistory;
+        private final ImageView commentHistory;
+        private final TextView dateHistory;
+        private String mComment;
 
         public HistoryViewHolder(final View itemView) {
             super (itemView);
             backHistory = (itemView.findViewById(R.id.list_bar_bar_cv));
+            commentHistory=(itemView.findViewById(R.id.list_bar_comment_btn));
+            dateHistory=(itemView.findViewById(R.id.list_bar_date_txt));
         }
 
         private void display (MoodDay moodDay) {
+            commentHistory.setVisibility(View.INVISIBLE);
+            mComment= moodDay.getComment();
 
+            if(moodDay.getComment()!=null){commentHistory.setVisibility(View.VISIBLE);}
+
+            dateHistory.setText(formatDate(moodDay.getDay()));
             int position=moodDay.getPosition();
 
             backHistory.setBackgroundResource(tColor.getResourceId(position, position));
@@ -83,9 +97,24 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
             params.width=(mWidth/5)*(position+1);
             backHistory.setLayoutParams(params);
 
+           commentHistory.setOnClickListener(new View.OnClickListener() {
+               @Override
+               public void onClick(View v) {
+                   Toast.makeText(commentHistory.getContext(),mComment, Toast.LENGTH_SHORT).show();
+               }
+           });
 
 
         }
+    }
+    public String formatDate(Date date) {
+
+        //Get format date
+        SimpleDateFormat formater = null;
+        formater = new SimpleDateFormat("dd/MM/yy");
+
+        String dateResult = formater.format(date);
+        return dateResult;
     }
 
 
