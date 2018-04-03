@@ -1,5 +1,7 @@
 package com.oc.bashalir.moodtracker.controller;
 
+import android.content.res.Resources;
+import android.graphics.Rect;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -8,6 +10,9 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SnapHelper;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Display;
+import android.view.View;
+import android.view.Window;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -34,10 +39,27 @@ public class HistoryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_history);
 
         DisplayMetrics metrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getRealMetrics(metrics);
+        int realHeight=metrics.heightPixels;
+        int realWidth=metrics.widthPixels;
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        int useWidth=metrics.widthPixels;
+        int useHeight=metrics.heightPixels;
+        int statusBarHeight=0;
+        int windowsHeight=0;
+        int windowsWidth=useWidth;
 
-       // Log.d(TAG, "Screen Dimension : " + metrics.widthPixels+" "+metrics.heightPixels);
+        if (useHeight>useWidth){
+            statusBarHeight=(realHeight-useHeight)/2;
+            windowsHeight=useHeight-statusBarHeight;
 
+        } else
+        {
+            statusBarHeight=(realWidth-useWidth)/2;
+            windowsHeight=useHeight-statusBarHeight;
+        }
+
+        Log.d(TAG, "Screen Dimension : USE : " + useHeight+"x"+useWidth+" REAL : "+realHeight+"x"+realWidth+" BAR : "+statusBarHeight);
 
         mHistoryRecyclerView = findViewById(R.id.activity_history_listMood_rv);
 
@@ -52,8 +74,10 @@ public class HistoryActivity extends AppCompatActivity {
             // Display a message of no registred
             Toast.makeText(getApplicationContext(), "Aucun Enregistrement", Toast.LENGTH_SHORT).show();
         }
+
+
         mHistoryRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mHistoryRecyclerView.setAdapter(new HistoryAdapter(moodList, tColor,metrics.heightPixels,metrics.widthPixels));
+        mHistoryRecyclerView.setAdapter(new HistoryAdapter(moodList, tColor,windowsHeight,windowsWidth));
 
         mHistoryRecyclerView.scrollToPosition(moodList.size()-1);
 
