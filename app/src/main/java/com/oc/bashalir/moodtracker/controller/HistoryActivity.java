@@ -46,7 +46,6 @@ public class HistoryActivity extends AppCompatActivity {
         int useWidth = metrics.widthPixels;
         int useHeight = metrics.heightPixels;
         int statusBarHeight = 0;
-        int windowsHeight = 0;
         int windowsWidth = useWidth;
 
         if (useHeight > useWidth) {
@@ -55,7 +54,7 @@ public class HistoryActivity extends AppCompatActivity {
             statusBarHeight = (realWidth - useWidth) / 2;
         }
 
-        windowsHeight = useHeight - statusBarHeight;
+        int windowsHeight = useHeight - statusBarHeight;
 
         Log.d(TAG, "Screen Dimension : USE : " + useHeight + "x" + useWidth + " REAL : " + realHeight + "x" + realWidth + " BAR : " + statusBarHeight);
 
