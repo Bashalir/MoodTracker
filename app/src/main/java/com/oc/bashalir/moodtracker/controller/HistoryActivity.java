@@ -38,25 +38,6 @@ public class HistoryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history);
 
-        DisplayMetrics metrics = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getRealMetrics(metrics);
-        int realHeight = metrics.heightPixels;
-        int realWidth = metrics.widthPixels;
-        getWindowManager().getDefaultDisplay().getMetrics(metrics);
-        int useWidth = metrics.widthPixels;
-        int useHeight = metrics.heightPixels;
-        int statusBarHeight = 0;
-        int windowsWidth = useWidth;
-
-        if (useHeight > useWidth) {
-            statusBarHeight = (realHeight - useHeight) / 2;
-        } else {
-            statusBarHeight = (realWidth - useWidth) / 2;
-        }
-
-        int windowsHeight = useHeight - statusBarHeight;
-
-        Log.d(TAG, "Screen Dimension : USE : " + useHeight + "x" + useWidth + " REAL : " + realHeight + "x" + realWidth + " BAR : " + statusBarHeight);
 
         mHistoryRecyclerView = findViewById(R.id.activity_history_listMood_rv);
 
@@ -72,9 +53,10 @@ public class HistoryActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Aucun Enregistrement", Toast.LENGTH_SHORT).show();
         }
 
+        int [] tWindowsSize=getSizeWindows();
 
         mHistoryRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mHistoryRecyclerView.setAdapter(new HistoryAdapter(moodList, tColor, windowsHeight, windowsWidth));
+        mHistoryRecyclerView.setAdapter(new HistoryAdapter(moodList, tColor, tWindowsSize[0],tWindowsSize[1]));
 
         mHistoryRecyclerView.scrollToPosition(moodList.size() - 1);
 
@@ -100,6 +82,34 @@ public class HistoryActivity extends AppCompatActivity {
         }
 
         return mMoodDayList;
+    }
+
+    public int[] getSizeWindows() {
+
+        DisplayMetrics metrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getRealMetrics(metrics);
+        int realHeight = metrics.heightPixels;
+        int realWidth = metrics.widthPixels;
+        getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        int useWidth = metrics.widthPixels;
+        int useHeight = metrics.heightPixels;
+        int statusBarHeight = 0;
+        int windowsWidth = useWidth;
+
+        if (useHeight > useWidth) {
+            statusBarHeight = (realHeight - useHeight) / 2;
+        } else {
+            statusBarHeight = (realWidth - useWidth) / 2;
+        }
+
+        int windowsHeight = useHeight - statusBarHeight;
+
+        int tWindowsSize[]={windowsHeight,windowsWidth};
+
+        Log.d(TAG, "Screen Dimension = USE : " + useHeight + "x" + useWidth + " REAL : " + realHeight + "x" + realWidth + " BAR : " + statusBarHeight);
+
+
+        return tWindowsSize;
     }
 
 }
