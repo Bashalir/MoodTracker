@@ -40,31 +40,29 @@ public class HistoryActivity extends AppCompatActivity {
 
         DisplayMetrics metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getRealMetrics(metrics);
-        int realHeight=metrics.heightPixels;
-        int realWidth=metrics.widthPixels;
+        int realHeight = metrics.heightPixels;
+        int realWidth = metrics.widthPixels;
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
-        int useWidth=metrics.widthPixels;
-        int useHeight=metrics.heightPixels;
-        int statusBarHeight=0;
-        int windowsHeight=0;
-        int windowsWidth=useWidth;
+        int useWidth = metrics.widthPixels;
+        int useHeight = metrics.heightPixels;
+        int statusBarHeight = 0;
+        int windowsHeight = 0;
+        int windowsWidth = useWidth;
 
-        if (useHeight>useWidth){
-            statusBarHeight=(realHeight-useHeight)/2;
-            windowsHeight=useHeight-statusBarHeight;
-
-        } else
-        {
-            statusBarHeight=(realWidth-useWidth)/2;
-            windowsHeight=useHeight-statusBarHeight;
+        if (useHeight > useWidth) {
+            statusBarHeight = (realHeight - useHeight) / 2;
+        } else {
+            statusBarHeight = (realWidth - useWidth) / 2;
         }
 
-        Log.d(TAG, "Screen Dimension : USE : " + useHeight+"x"+useWidth+" REAL : "+realHeight+"x"+realWidth+" BAR : "+statusBarHeight);
+        windowsHeight = useHeight - statusBarHeight;
+
+        Log.d(TAG, "Screen Dimension : USE : " + useHeight + "x" + useWidth + " REAL : " + realHeight + "x" + realWidth + " BAR : " + statusBarHeight);
 
         mHistoryRecyclerView = findViewById(R.id.activity_history_listMood_rv);
 
         String json = getIntent().getExtras().getString("JSON");
-        List <MoodDay> moodList=loadMoodDayList(json);
+        List<MoodDay> moodList = loadMoodDayList(json);
         if (json != null) {
 
 
@@ -77,9 +75,9 @@ public class HistoryActivity extends AppCompatActivity {
 
 
         mHistoryRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mHistoryRecyclerView.setAdapter(new HistoryAdapter(moodList, tColor,windowsHeight,windowsWidth));
+        mHistoryRecyclerView.setAdapter(new HistoryAdapter(moodList, tColor, windowsHeight, windowsWidth));
 
-        mHistoryRecyclerView.scrollToPosition(moodList.size()-1);
+        mHistoryRecyclerView.scrollToPosition(moodList.size() - 1);
 
         SnapHelper snapHelper = new LinearSnapHelper();
         snapHelper.attachToRecyclerView(mHistoryRecyclerView);
