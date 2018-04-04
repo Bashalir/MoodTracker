@@ -59,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
     private Gson gson;
     private String json;
     private Date mRightNow;
+    private int mPosition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -150,6 +151,7 @@ public class MainActivity extends AppCompatActivity {
 
                         mContext = getApplicationContext();
                         Mood mood = mAdapter.getMood(position);
+                        mPosition=position;
 
                         // Display a message of the selected Mood
                         Toast.makeText(mContext, mood.getDescription(), Toast.LENGTH_SHORT).show();
@@ -296,6 +298,7 @@ public class MainActivity extends AppCompatActivity {
 
                         EditText commentEditText = ((AlertDialog) dialog).findViewById(R.id.comment_dialog_comment_etx);
                         mComment = commentEditText.getText().toString();
+                        addMoodDayList(mPosition);
 
                         Log.d("DEBUG", "Comment :" + mComment);
                     }

@@ -12,7 +12,7 @@
     <string name="cancel">ANNULER</string>
     <string name="aWeekAgo">Il y\'as une semaine</string>
     <string name="numberDay">Il y\'as %1$d jours</string>
-    <string name="twoDayAgo">Avant hier</string>
+    <string name="twoDayAgo">Avant-hier</string>
     <string name="yesterday">Hier</string>
     <string name="today">Aujourd\'hui</string>
 
