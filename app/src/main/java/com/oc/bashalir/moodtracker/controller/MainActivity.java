@@ -73,14 +73,13 @@ public class MainActivity extends AppCompatActivity {
         mPreferences = getPreferences(MODE_PRIVATE);
         gson = new Gson();
 
+        //Create and load a mood list
         List<MoodDay> mMoodDayList = new ArrayList<>();
+        mMoodDayList = this.loadMoodDayList();
 
         // Configure RecyclerView
         this.configureRecyclerView();
         this.configureOnClickRecyclerView();
-
-        mMoodDayList = this.loadMoodDayList();
-
 
         // the user clicks the comment button
         mCommentButton.setOnClickListener(new View.OnClickListener() {
@@ -229,11 +228,16 @@ public class MainActivity extends AppCompatActivity {
 
         json = mPreferences.getString(LIST_MOOD, null);
 
+
         //check if there is already a list
         if (json != null) {
 
             mMoodDayList = gson.fromJson(json, new TypeToken<ArrayList<MoodDay>>() {
             }.getType());
+
+            //Assign the scroll position according to the last entry
+            mMoodPosition=mMoodDayList.get(mMoodDayList.size()-1).getPosition();
+
             mHistoryButton.setVisibility(View.VISIBLE);
 
             //Log of all element of the list
