@@ -10,7 +10,6 @@ import com.oc.bashalir.moodtracker.R;
 import com.oc.bashalir.moodtracker.view.MoodViewHolder;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 
 /**

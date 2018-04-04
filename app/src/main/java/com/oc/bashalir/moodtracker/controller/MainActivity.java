@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
     private MoodAdapter mAdapter;
     private MediaPlayer mPlayer = null;
     private Context mContext;
-    protected List<MoodDay> mMoodDayList = null;
+    private List<MoodDay> mMoodDayList = null;
     private String mComment = null;
     private Gson gson;
     private String json;
@@ -80,21 +80,27 @@ public class MainActivity extends AppCompatActivity {
 
         List<MoodDay> mMoodDayList = new ArrayList<>();
 
+        // Configure RecyclerView
         this.configureRecyclerView();
         this.configureOnClickRecyclerView();
+
         mMoodDayList = this.loadMoodDayList();
 
+
+        // the user clicks the comment button
         mCommentButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                addComment();
 
+                addComment();
             }
         });
 
+        // the user clicks the History button
         mHistoryButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Intent historyActivityIntent = new Intent(MainActivity.this, HistoryActivity.class);
                 historyActivityIntent.putExtra("JSON", json);
                 startActivity(historyActivityIntent);
@@ -103,6 +109,9 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Configuration of the RecyclerView
+     */
     private void configureRecyclerView() {
 
         Resources res = getResources();
@@ -112,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
         tDescription = res.getStringArray(R.array.description);
         tSound = res.obtainTypedArray(R.array.sound);
 
-
+        //Declare and load the table for all Mood
         Mood[] tMood = new Mood[5];
 
         for (int i = 0; i <= 4; i++) {
@@ -127,24 +136,25 @@ public class MainActivity extends AppCompatActivity {
         mListMoodRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mListMoodRecyclerView.setAdapter(mAdapter);
 
+        //Position and adjust the scroll
         mListMoodRecyclerView.scrollToPosition(mMoodPosition);
-
         SnapHelper snapHelper = new LinearSnapHelper();
         snapHelper.attachToRecyclerView(mListMoodRecyclerView);
 
     }
 
+    /**
+     * Play a sound and Display the mood name when the user click
+     */
     private void configureOnClickRecyclerView() {
         ItemClickSupport.addTo(mListMoodRecyclerView, R.layout.list_cell)
                 .setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
                     @Override
                     public void onItemClicked(RecyclerView recyclerView, int position, View v) {
 
-
                         Log.d(TAG, "Position :" + position);
 
                         mContext = getApplicationContext();
-
                         Mood mood = mAdapter.getMood(position);
 
                         // Display a message of the selected Mood
@@ -164,12 +174,20 @@ public class MainActivity extends AppCompatActivity {
                 });
     }
 
+
+    /**
+     * Record daily moods with his comments
+     *
+     * @param position the position that assigns the selected mood.
+     */
     private void addMoodDayList(int position) {
 
         mRightNow = new Date();
+
         int mPositionMoodDayList = 0;
         boolean searchDay = false;
 
+        // check if a mood of the day has already been recorded
         if (!(mMoodDayList == null)) {
             for (int i = 0; i < mMoodDayList.size(); i++) {
 
@@ -178,7 +196,6 @@ public class MainActivity extends AppCompatActivity {
                     searchDay = true;
                     Log.d(TAG, "Mood : TRUE");
                 }
-
             }
         }
 
@@ -188,6 +205,7 @@ public class MainActivity extends AppCompatActivity {
         MoodDay moodSelect = new MoodDay(position, mComment, mRightNow);
         Log.d(TAG, "Mood :" + moodSelect.getPosition() + " " + moodSelect.getDay() + " " + moodSelect.getComment());
 
+        //Add the mood of the day or change if already exists
         if (!searchDay) {
             mMoodDayList.add(moodSelect);
         } else {
@@ -198,23 +216,30 @@ public class MainActivity extends AppCompatActivity {
 
         saveMoodDayList(mMoodDayList);
 
+        //Log of all Mood
         for (MoodDay m : mMoodDayList) {
             Log.d(TAG, "ListMood :" + m.getPosition() + " " + m.getDay() + " " + m.getComment());
-
         }
 
     }
 
+    /**
+     * Load of the SharedPreferences the mood list save
+     *
+     * @return get the list of moods or a new
+     */
     public List<MoodDay> loadMoodDayList() {
 
         json = mPreferences.getString(LIST_MOOD, null);
 
+        //check if there is already a list
         if (json != null) {
 
             mMoodDayList = gson.fromJson(json, new TypeToken<ArrayList<MoodDay>>() {
             }.getType());
             mHistoryButton.setVisibility(View.VISIBLE);
 
+            //Log of all element of the list
             for (MoodDay m : mMoodDayList) {
                 Log.d(TAG, "ListMood :" + m.getPosition() + " " + m.getDay() + " " + m.getComment());
             }
@@ -227,8 +252,14 @@ public class MainActivity extends AppCompatActivity {
         return mMoodDayList = new ArrayList<>();
     }
 
+    /**
+     * Save the entire mood list
+     *
+     * @param moodDayList the list of all the moods already added
+     */
     private void saveMoodDayList(List<MoodDay> moodDayList) {
 
+        //Sort the list
         Collections.sort(moodDayList, new Comparator<MoodDay>() {
             @Override
             public int compare(MoodDay o1, MoodDay o2) {
@@ -238,13 +269,16 @@ public class MainActivity extends AppCompatActivity {
         });
 
         json = gson.toJson(moodDayList);
-
+        //save in SharedPreferences
         mPreferences.edit()
                 .putString(LIST_MOOD, json)
                 .apply();
 
     }
 
+    /**
+     * Open an AlertDialog for save user comment
+     */
     private void addComment() {
 
         final EditText input = new EditText(this);
@@ -254,23 +288,25 @@ public class MainActivity extends AppCompatActivity {
 
         input.setInputType(InputType.TYPE_CLASS_TEXT);
 
+        //Creation of a dialog box with the positive and negative choice
         AlertDialog builder = new AlertDialog.Builder(this)
                 .setTitle("Comment")
 
                 .setView(mViewDialog)
 
                 .setPositiveButton("VALIDER", new DialogInterface.OnClickListener() {
+                    //When the user click positive
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
                         EditText commentEditText = ((AlertDialog) dialog).findViewById(R.id.comment_dialog_comment_etx);
-
                         mComment = commentEditText.getText().toString();
 
                         Log.d("DEBUG", "Comment :" + mComment);
                     }
                 })
                 .setNegativeButton("ANNULER", new DialogInterface.OnClickListener() {
+                    //When the user click Negative
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
 
@@ -280,6 +316,12 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Format a date into a string
+     *
+     * @param date Today's date
+     * @return the date of the day in string
+     */
     public String formatDate(Date date) {
 
         //Get format date

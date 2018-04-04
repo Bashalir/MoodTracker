@@ -1,6 +1,5 @@
 package com.oc.bashalir.moodtracker.controller;
 
-import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -60,26 +59,7 @@ public class HistoryActivity extends AppCompatActivity {
         snapHelper.attachToRecyclerView(mHistoryRecyclerView);
 
     }
-/*
-    private void configureOnClickRecyclerView() {
-        ItemClickSupport.addTo(mHistoryRecyclerView, R.layout.list_bar)
-                .setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
-                    @Override
-                    public void onItemClicked(RecyclerView recyclerView, int position, View v) {
 
-
-                        Log.d(TAG, "Position :" + position);
-
-                        mContext = getApplicationContext();
-
-                        // Display a message of the selected Mood
-                        Toast.makeText(mContext, mood.getDescription(), Toast.LENGTH_SHORT).show();
-
-
-                    }
-                });
-    }
-*/
     public List<MoodDay> loadMoodDayList(String json) {
 
         List<MoodDay> mMoodDayList = new ArrayList<>();
