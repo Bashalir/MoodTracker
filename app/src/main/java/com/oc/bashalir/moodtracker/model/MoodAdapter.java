@@ -13,9 +13,12 @@ import java.util.ArrayList;
 
 
 /**
- * Created by Sumer on 08/03/2018.
+ * Created by Bashalir on 08/03/2018.
  */
 
+/**
+ * Adapter from the recyclerview of the mainActivity
+ */
 public class MoodAdapter extends RecyclerView.Adapter<MoodViewHolder> {
 
     private ArrayList<Mood> mList;
@@ -35,7 +38,7 @@ public class MoodAdapter extends RecyclerView.Adapter<MoodViewHolder> {
     public MoodViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View view = inflater.inflate(R.layout.list_cell,parent,false);
+        View view = inflater.inflate(R.layout.list_cell, parent, false);
 
         return new MoodViewHolder(view);
     }
@@ -45,13 +48,13 @@ public class MoodAdapter extends RecyclerView.Adapter<MoodViewHolder> {
     @Override
     public void onBindViewHolder(MoodViewHolder holder, int position) {
 
-       Mood mood = mList.get(position);
-       holder.display(mood);
+        Mood mood = mList.get(position);
+        holder.display(mood);
 
     }
 
-    public Mood getMood(int position){
-        return  mList.get(position);
+    public Mood getMood(int position) {
+        return mList.get(position);
     }
 
 

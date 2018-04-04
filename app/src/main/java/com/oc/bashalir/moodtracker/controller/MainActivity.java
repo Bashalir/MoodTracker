@@ -7,9 +7,9 @@ import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.media.MediaPlayer;
+import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.LinearSnapHelper;
 import android.support.v7.widget.RecyclerView;
@@ -30,20 +30,22 @@ import com.oc.bashalir.moodtracker.model.MoodAdapter;
 import com.oc.bashalir.moodtracker.model.MoodDay;
 
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
-import static android.view.Window.getDefaultFeatures;
-
 
 public class MainActivity extends AppCompatActivity {
 
+    public static final String TAG = "MainActivity";
+    public static final String LIST_MOOD = "LIST_MOOD";
+    public static TypedArray tSmiley;
+    public static TypedArray tColor;
+    public static String[] tDescription;
+    public static TypedArray tSound;
     private RecyclerView mListMoodRecyclerView;
     private ImageView mCommentButton;
     private ImageView mHistoryButton;
@@ -57,14 +59,6 @@ public class MainActivity extends AppCompatActivity {
     private Gson gson;
     private String json;
     private Date mRightNow;
-
-    public static TypedArray tSmiley;
-    public static TypedArray tColor;
-    public static String[] tDescription;
-    public static TypedArray tSound;
-
-    public static final String TAG = "MainActivity";
-    public static final String LIST_MOOD = "LIST_MOOD";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

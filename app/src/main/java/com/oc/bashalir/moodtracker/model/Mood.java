@@ -3,9 +3,12 @@ package com.oc.bashalir.moodtracker.model;
 import android.graphics.drawable.Drawable;
 
 /**
- * Created by Sumer on 11/03/2018.
+ * Created by Bashalir on 11/03/2018.
  */
 
+/**
+ * Gathers all the information of the mood
+ */
 public class Mood {
 
     private Drawable mSmiley; // Smiley image link

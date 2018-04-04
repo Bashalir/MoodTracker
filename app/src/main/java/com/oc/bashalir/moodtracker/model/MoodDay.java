@@ -1,11 +1,15 @@
 package com.oc.bashalir.moodtracker.model;
+
 import java.util.Date;
 
 /**
- * Created by Sumer on 13/03/2018.
+ * Created by Bashalir on 13/03/2018.
  */
 
-public class MoodDay  {
+/**
+ * Gathers all the information of the moodDay
+ */
+public class MoodDay {
 
     private Integer mPosition; // the position of the mood select for the day
     private String mComment; // comment of the day
@@ -14,7 +18,7 @@ public class MoodDay  {
     public MoodDay(Integer position, String comment, Date date) {
         this.setPosition(position);
         this.setComment(comment);
-        this.setDate(date);
+        this.setDay(date);
     }
 
     public Integer getPosition() {
@@ -37,10 +41,9 @@ public class MoodDay  {
         return mDay;
     }
 
-    public void setDate(Date day) {
+    public void setDay(Date day) {
         mDay = day;
     }
-
 
 
 }

@@ -30,15 +30,23 @@ import java.util.List;
 public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryViewHolder> {
 
 
-    private SharedPreferences mPreferences;
-    protected List<MoodDay> mMoodDayList = new ArrayList<>();
     public static final String TAG = "HistoryActivity";
     private static TypedArray tColor;
+    protected List<MoodDay> mMoodDayList = new ArrayList<>();
+    private SharedPreferences mPreferences;
     private int mHeight;
     private int mWidth;
     private Context mContext;
     private long CONST_DURATION_OF_DAY = 1000l * 60 * 60 * 24;
 
+    /**
+     * Configure history adapter by loading it with default settings
+     *
+     * @param listMoodDay the mood list of the day
+     * @param Color       the colors representing the moods
+     * @param x           the pixel height of the window
+     * @param y           the pixel width of the window
+     */
     public HistoryAdapter(List<MoodDay> listMoodDay, TypedArray Color, int x, int y) {
 
         mHeight = x;
@@ -68,6 +76,93 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
         MoodDay moodDay = mMoodDayList.get(position);
         holder.display(moodDay);
 
+    }
+
+    /**
+     * Format a date into a string
+     *
+     * @param date Today's date
+     * @return the date of the day in string
+     */
+    public String formatDate(Date date) {
+
+        //Get format date
+        SimpleDateFormat formater = null;
+        formater = new SimpleDateFormat("dd/MM/yy");
+
+        String dateResult = formater.format(date);
+        return dateResult;
+    }
+
+    /**
+     * gives the number of days from a date to now
+     *
+     * @param date the date of the mood bar
+     * @return the number of days from a date to now
+     */
+    private int numberOfDay(Date date) {
+        Date rightNow = new Date();
+
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.set(Calendar.HOUR_OF_DAY, 1);
+        date = cal.getTime();
+        cal.setTime(rightNow);
+        cal.set(Calendar.HOUR_OF_DAY, 24);
+        rightNow = cal.getTime();
+
+        int numberOfDay = 0;
+        int diff = (int) Math.abs(rightNow.getTime() - date.getTime());
+        long diffDay = diff / CONST_DURATION_OF_DAY;
+
+        //checked and attribute the number of days
+        if (date.getTime() > rightNow.getTime()) {
+            numberOfDay = 99;
+        } else {
+            numberOfDay = (int) diffDay;
+        }
+
+        Log.d(TAG, "Date Comparaison : " + diffDay + " " + numberOfDay);
+
+        return numberOfDay;
+    }
+
+    /**
+     * gives the text to display the date in the mood bar
+     *
+     * @param numberOfDay the number of days from a date to now
+     * @param date        the date of the mood bar
+     * @return the text to display the date
+     */
+    private String displayDate(int numberOfDay, Date date) {
+
+        String displayDate;
+        //Give a text to the number of days
+        switch (numberOfDay) {
+            case 7:
+                displayDate = "Il y'as une semaine";
+                break;
+            case 3:
+            case 4:
+            case 5:
+            case 6:
+                displayDate = "il y'as " + numberOfDay + " jours";
+                break;
+            case 2:
+                displayDate = "Avant hier";
+                break;
+            case 1:
+                displayDate = "Hier";
+                break;
+            case 0:
+                displayDate = "Aujourd'hui";
+                break;
+            default:
+                displayDate = formatDate(date);
+                break;
+        }
+
+        return displayDate;
     }
 
     public class HistoryViewHolder extends RecyclerView.ViewHolder {
@@ -106,55 +201,11 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
                 commentHistory.setVisibility(View.VISIBLE);
             }
 
+            //Display the date of the mood bar
             Date date = moodDay.getDay();
-            Date rightNow = new Date();
-            //dateHistory.setText(formatDate(date));
-
-            Calendar cal = Calendar.getInstance();
-            cal.setTime(date);
-            cal.set(Calendar.HOUR_OF_DAY, 1);
-            date=cal.getTime();
-            cal.setTime(rightNow);
-            cal.set(Calendar.HOUR_OF_DAY, 24);
-            rightNow=cal.getTime();
-
-            int numberOfDay=0;
-            int diff = (int)Math.abs(rightNow.getTime() - date.getTime());
-            long diffDay =  diff /  CONST_DURATION_OF_DAY;
-            if (date.getTime()>rightNow.getTime()){numberOfDay=99;} else {numberOfDay =(int) diffDay;}
-
-            String displayDate;
-
-            switch (numberOfDay) {
-                case 7:
-                    displayDate = "Il y'as une semaine";
-                    break;
-                case 3:
-                case 4:
-                case 5:
-                case 6:
-                    displayDate = "il y'as " + numberOfDay + " jours";
-                    break;
-                case 2:
-                    displayDate = "Avant hier";
-                    break;
-                case 1:
-                    displayDate = "Hier";
-                    break;
-                case 0:
-                    displayDate = "Aujourd'hui";
-                    break;
-                default:
-                    displayDate = formatDate(date);
-                    break;
-            }
-
-            Log.d(TAG,"date : "+displayDate+diffDay+" "+diff);
-
-
+            int numberOfDay = numberOfDay(date);
+            String displayDate = displayDate(numberOfDay, date);
             dateHistory.setText(displayDate);
-
-            Log.d(TAG, "Date Comparaison : " + diffDay + " " + numberOfDay);
 
             //Calculation and defined the size of the mood bar
             ViewGroup.LayoutParams params = barHistory.getLayoutParams();
@@ -162,9 +213,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
             params.width = (mWidth / 5) * (position + 1);
             barHistory.setLayoutParams(params);
 
-            /**
-             * Shows the comment in a toast at the click of the user
-             */
+            //Shows the comment in a toast at the click of the user
             commentHistory.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -186,24 +235,4 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
             });
         }
     }
-
-    /**
-     * Format a date into a string
-     *
-     * @param date Today's date
-     * @return the date of the day in string
-     */
-    public String formatDate(Date date) {
-
-        //Get format date
-        SimpleDateFormat formater = null;
-        formater = new SimpleDateFormat("dd/MM/yy");
-
-        String dateResult = formater.format(date);
-        return dateResult;
-    }
-
-
-
-
 }

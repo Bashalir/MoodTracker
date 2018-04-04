@@ -3,9 +3,6 @@ package com.oc.bashalir.moodtracker.controller;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-/**
- * Created by Sumer on 20/03/2018.
- */
 
 public class ItemClickSupport {
     private final RecyclerView mRecyclerView;
