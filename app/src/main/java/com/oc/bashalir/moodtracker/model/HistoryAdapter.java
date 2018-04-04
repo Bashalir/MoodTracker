@@ -2,6 +2,7 @@ package com.oc.bashalir.moodtracker.model;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.support.v7.widget.CardView;
@@ -37,22 +38,25 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
     private int mHeight;
     private int mWidth;
     private Context mContext;
-    private long CONST_DURATION_OF_DAY = 1000l * 60 * 60 * 24;
+    private Resources mResources;
 
     /**
      * Configure history adapter by loading it with default settings
      *
      * @param listMoodDay the mood list of the day
-     * @param Color       the colors representing the moods
+     * @param context     the context of the HistoryActivity
      * @param x           the pixel height of the window
      * @param y           the pixel width of the window
      */
-    public HistoryAdapter(List<MoodDay> listMoodDay, TypedArray Color, int x, int y) {
+    public HistoryAdapter(List<MoodDay> listMoodDay, int x, int y, Context context) {
 
+        mContext = context;
+        mResources = mContext.getResources();
         mHeight = x;
         mWidth = y;
         mMoodDayList = listMoodDay;
-        tColor = Color;
+        tColor = mResources.obtainTypedArray(R.array.color);
+
     }
 
     @Override
@@ -101,6 +105,8 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
      * @return the number of days from a date to now
      */
     private int numberOfDay(Date date) {
+
+        long CONST_DURATION_OF_DAY = 1000l * 60 * 60 * 24; // number of second for one day
         Date rightNow = new Date();
 
         Calendar cal = Calendar.getInstance();
@@ -136,26 +142,27 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
      */
     private String displayDate(int numberOfDay, Date date) {
 
-        String displayDate;
+        String displayDate = "";
+
         //Give a text to the number of days
         switch (numberOfDay) {
             case 7:
-                displayDate = "Il y'as une semaine";
+                displayDate = mResources.getString(R.string.aWeekAgo);
                 break;
             case 3:
             case 4:
             case 5:
             case 6:
-                displayDate = "il y'as " + numberOfDay + " jours";
+                displayDate = String.format(mResources.getString(R.string.numberDay), numberOfDay);
                 break;
             case 2:
-                displayDate = "Avant hier";
+                displayDate = mResources.getString(R.string.twoDayAgo);
                 break;
             case 1:
-                displayDate = "Hier";
+                displayDate = mResources.getString(R.string.yesterday);
                 break;
             case 0:
-                displayDate = "Aujourd'hui";
+                displayDate = mResources.getString(R.string.today);
                 break;
             default:
                 displayDate = formatDate(date);

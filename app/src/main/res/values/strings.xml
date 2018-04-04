@@ -1,5 +1,19 @@
 <resources>
     <string name="app_name">MoodTracker</string>
+    <string name="sad">Sad</string>
+    <string name="disappointed">Disappointed</string>
+    <string name="normal">Normal</string>
+    <string name="happy">Happy</string>
+    <string name="superHappy">Super Happy</string>
+    <string name="alertDialogTitle">Comment</string>
+    <string name="ok">OK</string>
+    <string name="cancel">CANCEL</string>
+    <string name="aWeekAgo">A week ago</string>
+    <string name="numberDay">%1$d days ago</string>
+    <string name="twoDayAgo">2 days ago</string>
+    <string name="yesterday">Yesterday</string>
+    <string name="today">Today</string>
+
 
     <array name="smiley">
         <item>@drawable/smiley_sad</item>
@@ -18,11 +32,11 @@
     </array>
 
     <string-array name="description">
-        <item>Sad</item>
-        <item>Disappointed</item>
-        <item>Normal</item>
-        <item>Happy</item>
-        <item>Super Happy</item>
+        <item>@string/sad</item>
+        <item>@string/disappointed</item>
+        <item>@string/normal</item>
+        <item>@string/happy</item>
+        <item>@string/superHappy</item>
     </string-array>
 
     <array name="sound">

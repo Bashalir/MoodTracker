@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">MoodTracker</string>
+    <string name="sad">Triste</string>
+    <string name="disappointed">Déçu</string>
+    <string name="normal">Normal</string>
+    <string name="happy">Joyeux</string>
+    <string name="superHappy">Très Joyeux</string>
+    <string name="alertDialogTitle">Commentaire</string>
+    <string name="ok">VALIDER</string>
+    <string name="cancel">ANNULER</string>
+    <string name="aWeekAgo">Il y\'as une semaine</string>
+    <string name="numberDay">Il y\'as %1$d jours</string>
+    <string name="twoDayAgo">Avant hier</string>
+    <string name="yesterday">Hier</string>
+    <string name="today">Aujourd\'hui</string>
+
+
+
+</resources>

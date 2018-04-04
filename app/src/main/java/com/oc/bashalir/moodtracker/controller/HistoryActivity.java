@@ -1,5 +1,6 @@
 package com.oc.bashalir.moodtracker.controller;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -18,7 +19,6 @@ import com.oc.bashalir.moodtracker.model.MoodDay;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.oc.bashalir.moodtracker.controller.MainActivity.tColor;
 
 /**
  * Show moods previously save
@@ -47,8 +47,9 @@ public class HistoryActivity extends AppCompatActivity {
         }
         int[] tWindowsSize = getSizeWindows();
 
+        Context mContext = getApplicationContext();
         //configuration of the Adapter for RecyclerView
-        mHistoryAdapter = new HistoryAdapter(moodList, tColor, tWindowsSize[0], tWindowsSize[1]);
+        mHistoryAdapter = new HistoryAdapter(moodList, tWindowsSize[0], tWindowsSize[1],mContext);
         mHistoryRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mHistoryRecyclerView.setAdapter(mHistoryAdapter);
 

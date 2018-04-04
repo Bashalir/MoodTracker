@@ -181,10 +181,11 @@ public class MainActivity extends AppCompatActivity {
         int mPositionMoodDayList = 0;
         boolean searchDay = false;
 
-        // check if a mood of the day has already been recorded
+        // check if the mood list is not empty
         if (!(mMoodDayList == null)) {
             for (int i = 0; i < mMoodDayList.size(); i++) {
 
+                // check if a mood of the day has already been recorded
                 if (formatDate(mMoodDayList.get(i).getDay()).contains(formatDate(mRightNow))) {
                     mPositionMoodDayList = i;
                     searchDay = true;
@@ -284,11 +285,11 @@ public class MainActivity extends AppCompatActivity {
 
         //Creation of a dialog box with the positive and negative choice
         AlertDialog builder = new AlertDialog.Builder(this)
-                .setTitle("Comment")
+                .setTitle(R.string.alertDialogTitle)
 
                 .setView(mViewDialog)
 
-                .setPositiveButton("VALIDER", new DialogInterface.OnClickListener() {
+                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                     //When the user click positive
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -299,11 +300,10 @@ public class MainActivity extends AppCompatActivity {
                         Log.d("DEBUG", "Comment :" + mComment);
                     }
                 })
-                .setNegativeButton("ANNULER", new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                     //When the user click Negative
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-
                     }
                 })
                 .show();
