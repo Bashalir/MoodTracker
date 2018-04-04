@@ -145,12 +145,13 @@ public class MainActivity extends AppCompatActivity {
                 .setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
                     @Override
                     public void onItemClicked(RecyclerView recyclerView, int position, View v) {
+                        mPosition=position;
 
                         Log.d(TAG, "Position :" + position);
 
                         mContext = getApplicationContext();
                         Mood mood = mAdapter.getMood(position);
-                        mPosition=position;
+
 
                         // Display a message of the selected Mood
                         Toast.makeText(mContext, mood.getDescription(), Toast.LENGTH_SHORT).show();
@@ -237,7 +238,8 @@ public class MainActivity extends AppCompatActivity {
 
             //Assign the scroll position according to the last entry
             mMoodPosition=mMoodDayList.get(mMoodDayList.size()-1).getPosition();
-
+            mPosition=mMoodPosition;
+            
             mHistoryButton.setVisibility(View.VISIBLE);
 
             //Log of all element of the list
