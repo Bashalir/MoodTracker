@@ -42,10 +42,10 @@ public class MainActivity extends AppCompatActivity {
 
     public static final String TAG = "MainActivity";
     public static final String LIST_MOOD = "LIST_MOOD";
-    public static TypedArray tSmiley;
-    public static TypedArray tColor;
-    public static String[] tDescription;
-    public static TypedArray tSound;
+    private static TypedArray tSmiley;
+    private static TypedArray tColor;
+    private static String[] tDescription;
+    private static TypedArray tSound;
     private RecyclerView mListMoodRecyclerView;
     private ImageView mCommentButton;
     private ImageView mHistoryButton;
@@ -239,7 +239,7 @@ public class MainActivity extends AppCompatActivity {
             //Assign the scroll position according to the last entry
             mMoodPosition=mMoodDayList.get(mMoodDayList.size()-1).getPosition();
             mPosition=mMoodPosition;
-            
+
             mHistoryButton.setVisibility(View.VISIBLE);
 
             //Log of all element of the list
