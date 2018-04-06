@@ -311,6 +311,10 @@ public class MainActivity extends AppCompatActivity {
 
                         EditText commentEditText = ((AlertDialog) dialog).findViewById(R.id.comment_dialog_comment_etx);
                         mComment = commentEditText.getText().toString();
+                        if (mComment.replaceAll(" ", "").equals("")) {
+                            mComment = null;
+                        }
+
                         addMoodDayList(mPosition,mComment);
 
                         Log.d("DEBUG", "Comment :" + mComment);
