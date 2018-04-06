@@ -170,7 +170,7 @@ public class MainActivity extends AppCompatActivity {
                         Log.d(TAG, "Description :" + mood.getDescription());
                         Log.d(TAG, "Sound :" + mood.getSound());
 
-                        addMoodDayList(position,mComment);
+                        addMoodDayList(position, mComment);
                         mHistoryButton.setVisibility(View.VISIBLE);
 
                     }
@@ -182,7 +182,7 @@ public class MainActivity extends AppCompatActivity {
      *
      * @param position : the position that assigns the selected mood.
      */
-    private void addMoodDayList(int position,String comment) {
+    private void addMoodDayList(int position, String comment) {
 
         mRightNow = new Date();
 
@@ -241,7 +241,7 @@ public class MainActivity extends AppCompatActivity {
             mMoodDayList = gson.fromJson(json, new TypeToken<ArrayList<MoodDay>>() {
             }.getType());
 
-            MoodDay lastMoodDay=mMoodDayList.get(mMoodDayList.size() - 1);
+            MoodDay lastMoodDay = mMoodDayList.get(mMoodDayList.size() - 1);
 
             //Assign the scroll position according to the last entry
             mMoodPosition = lastMoodDay.getPosition();
@@ -296,7 +296,6 @@ public class MainActivity extends AppCompatActivity {
         View mViewDialog = inflater.inflate(R.layout.comment_dialog, null, false);
 
         input.setInputType(InputType.TYPE_CLASS_TEXT);
-        //Creation of a dialog box with the positive and negative choice
 
         //Creation of a dialog box with the positive and negative choice
         AlertDialog builder = new AlertDialog.Builder(this)
@@ -311,11 +310,13 @@ public class MainActivity extends AppCompatActivity {
 
                         EditText commentEditText = ((AlertDialog) dialog).findViewById(R.id.comment_dialog_comment_etx);
                         mComment = commentEditText.getText().toString();
+
+                        //makes comments null if there are just one or more spaces
                         if (mComment.replaceAll(" ", "").equals("")) {
                             mComment = null;
                         }
 
-                        addMoodDayList(mPosition,mComment);
+                        addMoodDayList(mPosition, mComment);
 
                         Log.d("DEBUG", "Comment :" + mComment);
                     }
@@ -327,7 +328,6 @@ public class MainActivity extends AppCompatActivity {
                     }
                 })
                 .show();
-
     }
 
     /**
