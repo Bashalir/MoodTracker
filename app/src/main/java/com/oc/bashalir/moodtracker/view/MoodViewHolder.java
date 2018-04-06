@@ -11,9 +11,8 @@ import com.oc.bashalir.moodtracker.R;
 import com.oc.bashalir.moodtracker.model.Mood;
 
 /**
- * Created by Bashalir on 20/03/2018.
+ * Class MoodViewHolder
  */
-
 public class MoodViewHolder extends RecyclerView.ViewHolder {
 
 
@@ -21,7 +20,11 @@ public class MoodViewHolder extends RecyclerView.ViewHolder {
     private final ImageView imgMood;
     private Mood currentMood;
 
-
+    /**
+     * Constructor of the View Holder
+     *
+     * @param itemView
+     */
     public MoodViewHolder(final View itemView) {
 
         super(itemView);

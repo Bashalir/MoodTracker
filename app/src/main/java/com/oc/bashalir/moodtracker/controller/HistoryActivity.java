@@ -49,7 +49,7 @@ public class HistoryActivity extends AppCompatActivity {
 
         Context mContext = getApplicationContext();
         //configuration of the Adapter for RecyclerView
-        mHistoryAdapter = new HistoryAdapter(moodList, tWindowsSize[0], tWindowsSize[1],mContext);
+        mHistoryAdapter = new HistoryAdapter(moodList, tWindowsSize[0], tWindowsSize[1], mContext);
         mHistoryRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mHistoryRecyclerView.setAdapter(mHistoryAdapter);
 
@@ -93,7 +93,6 @@ public class HistoryActivity extends AppCompatActivity {
      * @return Int Table tWindowsSize with [0]windowsHeight, [1]windowsWidth
      */
     public int[] getSizeWindows() {
-
         DisplayMetrics metrics = new DisplayMetrics();
 
         //get the real screen size

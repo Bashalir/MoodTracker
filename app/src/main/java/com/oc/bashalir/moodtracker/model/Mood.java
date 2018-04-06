@@ -2,19 +2,25 @@ package com.oc.bashalir.moodtracker.model;
 
 import android.graphics.drawable.Drawable;
 
-/**
- * Created by Bashalir on 11/03/2018.
- */
 
 /**
  * Gathers all the information of the mood
  */
 public class Mood {
 
-    private Drawable mSmiley; // Smiley image link
-    private Integer mBackColor; // Color code of the bottom of the cardview
-    private String mDescription; // Description of the posted smiley
-    private Integer mSound; //  Mood sound link
+    private Drawable mSmiley;
+    private Integer mBackColor;
+    private String mDescription;
+    private Integer mSound;
+
+    /**
+     * Constructor of Mood class
+     *
+     * @param smiley      : Smiley image link
+     * @param backColor   : Color code of the bottom of the cardview
+     * @param description : Description of the posted smiley
+     * @param sound       : Mood sound link
+     */
 
     public Mood(Drawable smiley, Integer backColor, String description, Integer sound) {
         this.setSmiley(smiley);
@@ -22,6 +28,10 @@ public class Mood {
         this.setDescription(description);
         this.setSound(sound);
     }
+
+    /**
+     * Getters and Setters
+     */
 
     public Drawable getSmiley() {
         return mSmiley;

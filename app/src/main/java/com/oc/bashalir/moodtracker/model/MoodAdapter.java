@@ -13,27 +13,40 @@ import java.util.ArrayList;
 
 
 /**
- * Created by Bashalir on 08/03/2018.
- */
-
-/**
  * Adapter from the recyclerview of the mainActivity
  */
 public class MoodAdapter extends RecyclerView.Adapter<MoodViewHolder> {
 
     private ArrayList<Mood> mList;
 
+    /**
+     * Constructor of MoodAdapter
+     *
+     * @param list : list of Mood
+     */
     public MoodAdapter(ArrayList<Mood> list) {
         mList = list;
     }
 
-    // RETURN THE TOTAL COUNT OF ITEMS IN THE LIST
+
+    /**
+     * Get the size of items in adapter
+     *
+     * @return the size of items in adapter
+     */
     @Override
     public int getItemCount() {
         return mList.size();
     }
 
-    // CREATE VIEW HOLDER AND INFLATING
+
+    /**
+     * Create View Holder and inflating
+     *
+     * @param parent
+     * @param viewType
+     * @return
+     */
     @Override
     public MoodViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
@@ -43,8 +56,12 @@ public class MoodAdapter extends RecyclerView.Adapter<MoodViewHolder> {
         return new MoodViewHolder(view);
     }
 
-
-    // UPDATE VIEW HOLDER WITH MOOD LIST
+    /**
+     * Update View Holder with Mood List
+     *
+     * @param holder
+     * @param position
+     */
     @Override
     public void onBindViewHolder(MoodViewHolder holder, int position) {
 
@@ -53,6 +70,10 @@ public class MoodAdapter extends RecyclerView.Adapter<MoodViewHolder> {
 
     }
 
+    /**
+     * @param position : the position of the mood select for the day
+     * @return position of the mood in the List
+     */
     public Mood getMood(int position) {
         return mList.get(position);
     }

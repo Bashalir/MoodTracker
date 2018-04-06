@@ -37,7 +37,9 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
-
+/**
+ * Configure recyclerview, manage moods
+ */
 public class MainActivity extends AppCompatActivity {
 
     public static final String TAG = "MainActivity";
@@ -61,6 +63,11 @@ public class MainActivity extends AppCompatActivity {
     private Date mRightNow;
     private int mPosition;
 
+    /**
+     * at startup Create a mood list and configure RecyclerView
+     *
+     * @param : savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -145,7 +152,7 @@ public class MainActivity extends AppCompatActivity {
                 .setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
                     @Override
                     public void onItemClicked(RecyclerView recyclerView, int position, View v) {
-                        mPosition=position;
+                        mPosition = position;
 
                         Log.d(TAG, "Position :" + position);
 
@@ -163,20 +170,19 @@ public class MainActivity extends AppCompatActivity {
                         Log.d(TAG, "Description :" + mood.getDescription());
                         Log.d(TAG, "Sound :" + mood.getSound());
 
-                        addMoodDayList(position);
+                        addMoodDayList(position,mComment);
                         mHistoryButton.setVisibility(View.VISIBLE);
 
                     }
                 });
     }
 
-
     /**
      * Record daily moods with his comments
      *
-     * @param position the position that assigns the selected mood.
+     * @param position : the position that assigns the selected mood.
      */
-    private void addMoodDayList(int position) {
+    private void addMoodDayList(int position,String comment) {
 
         mRightNow = new Date();
 
@@ -199,7 +205,7 @@ public class MainActivity extends AppCompatActivity {
         Log.d(TAG, "Date :" + mRightNow);
 
         //Add the mood of the day in the list
-        MoodDay moodSelect = new MoodDay(position, mComment, mRightNow);
+        MoodDay moodSelect = new MoodDay(position, comment, mRightNow);
         Log.d(TAG, "Mood :" + moodSelect.getPosition() + " " + moodSelect.getDay() + " " + moodSelect.getComment());
 
         //Add the mood of the day or change if already exists
@@ -229,16 +235,17 @@ public class MainActivity extends AppCompatActivity {
 
         json = mPreferences.getString(LIST_MOOD, null);
 
-
         //check if there is already a list
         if (json != null) {
 
             mMoodDayList = gson.fromJson(json, new TypeToken<ArrayList<MoodDay>>() {
             }.getType());
 
+            MoodDay lastMoodDay=mMoodDayList.get(mMoodDayList.size() - 1);
+
             //Assign the scroll position according to the last entry
-            mMoodPosition=mMoodDayList.get(mMoodDayList.size()-1).getPosition();
-            mPosition=mMoodPosition;
+            mMoodPosition = lastMoodDay.getPosition();
+            mPosition = mMoodPosition;
 
             mHistoryButton.setVisibility(View.VISIBLE);
 
@@ -258,7 +265,7 @@ public class MainActivity extends AppCompatActivity {
     /**
      * Save the entire mood list
      *
-     * @param moodDayList the list of all the moods already added
+     * @param moodDayList : the list of all the moods already added
      */
     private void saveMoodDayList(List<MoodDay> moodDayList) {
 
@@ -276,7 +283,6 @@ public class MainActivity extends AppCompatActivity {
         mPreferences.edit()
                 .putString(LIST_MOOD, json)
                 .apply();
-
     }
 
     /**
@@ -290,6 +296,7 @@ public class MainActivity extends AppCompatActivity {
         View mViewDialog = inflater.inflate(R.layout.comment_dialog, null, false);
 
         input.setInputType(InputType.TYPE_CLASS_TEXT);
+        //Creation of a dialog box with the positive and negative choice
 
         //Creation of a dialog box with the positive and negative choice
         AlertDialog builder = new AlertDialog.Builder(this)
@@ -304,7 +311,7 @@ public class MainActivity extends AppCompatActivity {
 
                         EditText commentEditText = ((AlertDialog) dialog).findViewById(R.id.comment_dialog_comment_etx);
                         mComment = commentEditText.getText().toString();
-                        addMoodDayList(mPosition);
+                        addMoodDayList(mPosition,mComment);
 
                         Log.d("DEBUG", "Comment :" + mComment);
                     }
@@ -322,7 +329,7 @@ public class MainActivity extends AppCompatActivity {
     /**
      * Format a date into a string
      *
-     * @param date Today's date
+     * @param date : Today's date
      * @return the date of the day in string
      */
     public String formatDate(Date date) {
@@ -335,6 +342,4 @@ public class MainActivity extends AppCompatActivity {
         return dateResult;
     }
 
-
 }
-

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -10,11 +9,11 @@
     <!-- List Mood RecyclerView  -->
 
     <android.support.v7.widget.RecyclerView
+        android:id="@+id/activity_main_listMood_rv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
-        android:id="@+id/activity_main_listMood_rv"></android.support.v7.widget.RecyclerView>
+        android:layout_centerVertical="true"></android.support.v7.widget.RecyclerView>
 
 
     <!-- Comment Button -->
@@ -23,8 +22,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|start"
-        android:layout_marginLeft="15dp"
         android:layout_marginBottom="15dp"
+        android:layout_marginLeft="15dp"
         android:scaleX="1.3"
         android:scaleY="1.3"
         android:src="@drawable/ic_note_add_black"
@@ -38,11 +37,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
+        android:layout_marginBottom="15dp"
         android:layout_marginRight="15dp"
         android:scaleX="1.3"
         android:scaleY="1.3"
         android:src="@drawable/ic_history_black"
-        android:layout_marginBottom="15dp"
 
         />
 
