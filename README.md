@@ -7,9 +7,25 @@ Just select the smiley of your mood of the day. You can also write a comment and
 
 ![Mood Screenshot](http://www.image-heberg.fr/files/1522913444780283264.png "Mood Screenshot")
 
+## Features
+* 5 different mood choices
+* 5 sounds by mood
+* Add a comment on your mood by day
+* Analyze your different emotions in the history
+* Responsive Design for smartphone and tablet
+* Works in both portrait and landscape modes
+* Works in English by default but also in French
+* Starting from Android Kitkat 4.4 (API 19)
+
+## Installation
+1. [Download the repository.](https://github.com/Bashalir/MoodTracker/archive/master.zip)
+2. Unzip the repository into a project folder.
+3.  Start Android Studio.    
+4.  From the Android Studio menu click File > New > Import Project.    
+6.  Select the destination folder and click Next.
 
 ## Version
-1.0
+0.9
 
 ## Developed By
 
